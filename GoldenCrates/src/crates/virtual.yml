@@ -1,0 +1,106 @@
+name: §dVirtual Crate
+template: wander
+cooldown: 15
+attached-citizens: ''
+permission-required: false
+
+key:
+  id: virtual
+
+item:
+  material: ENDER_CHEST
+  name: '&dVirtual Crate'
+  lore:
+  - '&eThis is sample crate...'
+  item-flags:
+  - '*'
+  unbreakable: false
+
+block:
+  pushback:
+    enabled: true
+  hologram:
+    enabled: false
+    text:
+    - §c§lMYSTERY CRATE
+    - §7Buy a key at §cwww.myserver.com
+
+effects:
+  STATIC:
+    type: SIMPLE
+    particle: FLAME
+    sound: none
+  USE:
+    type: HELIX
+    particle: FLAME
+    sound: ENTITY_PLAYER_LEVELUP
+  OPEN:
+    type: FIREWORK
+    particle: FLAME
+    sound: ENTITY_FIREWORK_ROCKET_BLAST
+
+rewards:
+  broadcast: true
+  min: 1
+  max: 1
+  list:
+    '0':
+      name: §e10 Levels
+      chance: 15.0
+      cmds:
+      - exp give %player% 10l
+      preview: 2g0004000j9cg01mrb9dpim6sj1cpq3kpboe1in4qb5dphmanr2dtq78r350400agrfeln782g0
+    '1':
+      name: §e30 Levels
+      chance: 10.0
+      cmds:
+      - exp give %player% 30l
+      preview: 2g0004000j9cg01mrb9dpim6sj1cpq3kpboe1in4qb5dphmanr2dtq78r350400agrfeln787g0
+    '2':
+      name: §ax32 Emerald
+      chance: 20.0
+      cmds: []
+      item: 2g0004000j9cg012rb9dpim6sj1cpq3kpbdclp62r340400agrfeln78800
+      preview: 2g0004000j9cg012rb9dpim6sj1cpq3kpbdclp62r340400agrfeln78800
+    '3':
+      name: §cx16 TNT
+      chance: 20.0
+      cmds: []
+      item: k00010004qb4006mqqbeclhn4ob6egt78rjk0400agrfeln78400
+      preview: k00010004qb4006mqqbeclhn4ob6egt78rjk0400agrfeln78400
+    '4':
+      name: §ax8 Creeper Spawn Egg
+      chance: 7.5
+      cmds: []
+      item: 2g0004000j9cg01mrb9dpim6sj1cpq3koriclin0pbibtpn0obndpfmapr70400agrfeln78200
+      preview: 2g0004000j9cg01mrb9dpim6sj1cpq3koriclin0pbibtpn0obndpfmapr70400agrfeln78200
+    '5':
+      name: §dx32 Golden Apple
+      chance: 12.0
+      cmds: []
+      item: 2g0004000j9cg01crb9dpim6sj1cpq3kprfdhi6arivc5o70r350400agrfeln78800
+      preview: 2g0004000j9cg01crb9dpim6sj1cpq3kprfdhi6arivc5o70r350400agrfeln78800
+    '6':
+      name: §bx16 Diamonds
+      chance: 8.0
+      cmds: []
+      item: 2g0004000j9cg012rb9dpim6sj1cpq3kp39c5mmurj40400agrfeln78400
+      preview: 2g0004000j9cg012rb9dpim6sj1cpq3kp39c5mmurj40400agrfeln78400
+    '7':
+      name: §ax64 Melon Block
+      chance: 30.0
+      cmds: []
+      item: 1800020009km800fdlkmspb3e9gmct1qdlimorre0400agrfeln78g00
+      preview: 1800020009km800fdlkmspb3e9gmct1qdlimorre0400agrfeln78g00
+    '8':
+      name: §6x64 Jack O'Lantern
+      chance: 30.0
+      cmds: []
+      item: 5000080016ip0031mmirj5cdp62pjk79l62orbbtnlur31dpq6asje0400agrfeln78g00
+      preview: 5000080016ip0031mmirj5cdp62pjk79l62orbbtnlur31dpq6asje0400agrfeln78g00
+    '9':
+      name: §6$5.000
+      chance: 5.0
+      cmds:
+      - eco give %player% 5000
+      preview: k00010004qb4006mqqbeclhn4ob6egt6qobg0400agrfeln7808a001n8ob71800ep39edo6oobp10008jj1dlig05rr49q6au3k48t25gl76r1aer146kn30c1g49ug0000

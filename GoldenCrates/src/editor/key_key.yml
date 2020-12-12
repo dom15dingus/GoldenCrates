@@ -1,0 +1,58 @@
+title: 'Key Editor'
+size: 36
+content:
+  back:
+    material: BARRIER
+    name: '&cReturn'
+    slots: 31
+    type: RETURN
+editor:
+  key:
+    material: TRIPWIRE_HOOK
+    name: '&eKey Item'
+    lore:
+    - '&bCurrent: &a%key-item%'
+    - '&7'
+    - '&7This item will be used for physical'
+    - '&7keys when it''s given to players.'
+    - '&7'
+    - '&6Drag & Drop: &eReplace Item'
+    - '&6Middle-Click: &eGet Item'
+    slots: 13
+    type: KEY_CHANGE_ITEM
+
+  name:
+    material: NAME_TAG
+    name: '&eKey Name'
+    lore:
+    - '&bCurrent: &a%name%'
+    - '&7'
+    - '&7This name will be used in messages.'
+    - '&7'
+    - '&6Left-Click: &eChange'
+    slots: 10
+    type: KEY_CHANGE_NAME
+
+  virtual:
+    material: GRAY_DYE
+    name: '&eVirtual Key'
+    lore:
+    - '&bVirtual: &a%virtual%'
+    - '&7'
+    - '&7Virtual keys are stored in the database'
+    - '&7and can not be used as in-game items.'
+    - '&7'
+    - '&6Left-Click: &eToggle'
+    animation-frames:
+      '0':
+        material: GRAY_DYE
+        name: '%GLOBAL%'
+        lore:
+        - '%GLOBAL%'
+      '1':
+        material: LIME_DYE
+        name: '%GLOBAL%'
+        lore:
+        - '%GLOBAL%'
+    slots: 16
+    type: KEY_CHANGE_VIRTUAL

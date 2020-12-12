@@ -1,0 +1,186 @@
+title: 'Crate Editor'
+size: 54
+
+content:
+  back:
+    material: BARRIER
+    name: '&cReturn'
+    slots: 49
+    type: RETURN
+
+editor:
+  deletion:
+    material: CAULDRON
+    name: '&cDelete Crate'
+    lore:
+    - '&7Permanently delete this crate.'
+    - '&7'
+    - '&4Hold &cShift &4to confirm.'
+    slots: 53
+    type: CRATE_DELETE
+
+  rewards:
+    material: EMERALD
+    name: '&eReward Manager'
+    lore:
+    - '&7Create and edit crate rewards.'
+    - '&7'
+    - '&6Left-Click: &eNavigate'
+    slots: 19
+    type: CRATE_OPEN_REWARDS
+
+  block_effects:
+    material: BLAZE_POWDER
+    name: '&eBlock Effects'
+    lore:
+    - '&bModel: &a%block-effect-type%'
+    - '&bParticle: &a%block-effect-particle%'
+    - '&7'
+    - '&7Defines particle effects that will'
+    - '&7will be displayed around the crate block(s).'
+    - '&7'
+    - '&6Left-Click: &eToggle Model'
+    - '&6Right-Click: &eChange Particle'
+    slots: 28
+    type: CRATE_CHANGE_BLOCK_EFFECTS
+
+  npcs:
+    material: PLAYER_HEAD
+    name: '&eAttached NPCs'
+    lore:
+    - '&7The following NPCs will'
+    - '&7preview and open crate on click:'
+    - '&a- %npc-id% (%npc-name%)'
+    - '&7'
+    - '&c&lCitizens Required!'
+    - '&7'
+    - '&6Left-Click: &eAdd NPC'
+    - '&6Right-Click: &eClear List'
+    slots: 8
+    type: CRATE_CHANGE_NPC
+
+  key:
+    material: TRIPWIRE_HOOK
+    name: '&eKey Manager'
+    lore:
+    - '&bKey Id: &a%key-id%'
+    - '&7'
+    - '&7Defines the key used to open'
+    - '&7this crate.'
+    - '&7'
+    - '&4Use key names from /keys/ folder.'
+    - '&7'
+    - '&6Left-Click: &eChange Key'
+    - '&6Right-Click: &eNo Key'
+    slots: 15
+    type: CRATE_CHANGE_KEY
+
+  name:
+    material: NAME_TAG
+    name: '&eCrate Name'
+    lore:
+    - '&bCurrent: &a%name%'
+    - '&7'
+    - '&7This name will be used in messages.'
+    - '&7'
+    - '&6Left-Click: &eChange'
+    slots: 4
+    type: CRATE_CHANGE_NAME
+
+  template:
+    material: PAINTING
+    name: '&eCrate Template'
+    lore:
+    - '&bCurrent: &a%template%'
+    - '&7'
+    - '&7Defines custom GUI'
+    - '&7template for crate'
+    - '&7reward roll animation.'
+    - '&7'
+    - '&6Left-Click: &eChange'
+    - '&6Right-Click: &eDisable'
+    slots: 11
+    type: CRATE_CHANGE_TEMPLATE
+
+  icon:
+    material: ENDER_CHEST
+    name: '&eCrate Item'
+    lore:
+    - '&bCurrent: &a%icon%'
+    - '&7'
+    - '&7This item will be used'
+    - '&7when crate is given to a player'
+    - '&7or added in crate menu.'
+    - '&7'
+    - '&6Drag & Drop: &eReplace'
+    - '&6Middle-Click: &eGet crate item'
+    slots: 13
+    type: CRATE_CHANGE_ITEM
+
+  block-holo:
+    material: ARMOR_STAND
+    name: '&eBlock Hologram'
+    lore:
+    - '&bEnabled: &a%block-hologram-enabled%'
+    - '&7'
+    - '&7The following text will appear'
+    - '&7above the crate block if enabled:'
+    - '&7- %block-hologram-text%'
+    - '&7'
+    - '&c&lHolographicDisplays Required!'
+    - '&7'
+    - '&6Left-Click: &eAdd Line'
+    - '&6Right-Click: &eClear List'
+    - '&6Middle-Click: &eToggle Hologram'
+    slots: 25
+    type: CRATE_CHANGE_BLOCK_HOLOGRAM
+
+  block-location:
+    material: CHEST
+    name: '&eBlock Location'
+    lore:
+    - '&bPushback &a%block-pushback%'
+    - '&7'
+    - '&bThis crate will be attached to'
+    - '&bthe following blocks:'
+    - '&7- &a%block-x%&2, %block-y%&2, %block-z%&2 in &a%block-world%'
+    - '&7'
+    - '&6Left-Click: &eAdd Block'
+    - '&6Right-Click: &eClear Blocks'
+    - '&6Middle-Click: &eToggle Pushback'
+    slots: 34
+    type: CRATE_CHANGE_BLOCK_LOCATION
+
+  cooldown:
+    material: CLOCK
+    name: '&eOpen Cooldown'
+    lore:
+    - '&bCurrent: &a%cd-raw% sec.'
+    - '&bFormatted: &a%cd-format%'
+    - '&7'
+    - '&7Defines the duration before'
+    - '&7this crate can be opened again.'
+    - '&7'
+    - '&6Left-Click: &eChange'
+    slots: 22
+    type: CRATE_CHANGE_COOLDOWN
+
+  cost:
+    material: GOLD_NUGGET
+    name: '&eOpen Cost'
+    lore:
+    - '&bMoney: &a%cost-vault%$'
+    - '&bExp: &a%cost-exp%'
+    - '&bPermission: &a%cost-permission%'
+    - '&7'
+    - '&7Player will have to pay'
+    - '&7specified amount of money or exp'
+    - '&7to open this crate.'
+    - '&7'
+    - '&4Permission Node: &c%open-perm%'
+    - '&7'
+    - '&6Left-Click: &eChange Vault'
+    - '&6Right-Click: &eChange Exp'
+    - '&6Middle-Click: &eToggle Permission'
+    slots: 31
+    type: CRATE_CHANGE_OPEN_COST

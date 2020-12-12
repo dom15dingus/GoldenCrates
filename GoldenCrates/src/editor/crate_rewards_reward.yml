@@ -1,0 +1,80 @@
+title: 'Crate Editor'
+size: 54
+content:
+  back:
+    material: BARRIER
+    name: '&cReturn'
+    slots: 40
+    type: RETURN
+editor:
+  name:
+    material: NAME_TAG
+    name: '&eReward Name'
+    lore:
+    - '&bCurrent: &a%name%'
+    - '&7'
+    - '&7This name will be used in messages.'
+    - '&7'
+    - '&6Left-Click: &eChange'
+    - '&6Right-Click: &eSync with item name'
+    slots: 4
+    type: CRATE_CHANGE_REWARD_NAME
+
+  item:
+    material: EMERALD
+    name: '&eReward Item'
+    lore:
+    - '&bCurrent: &a%item%'
+    - '&7'
+    - '&7This item will be given'
+    - '&7to a player on win.'
+    - '&aItem meta will be saved.'
+    - '&7'
+    - '&6Drag and Drop: &eReplace'
+    - '&6Shift+Right-Click: &eDisable'
+    - '&6Middle-Click: &eGet Item'
+    slots: 19
+    type: CRATE_CHANGE_REWARD_ITEM
+
+  preview:
+    material: ITEM_FRAME
+    name: '&eReward Preview'
+    lore:
+    - '&bCurrent: &a%preview%'
+    - '&7'
+    - '&7This item will be displayed'
+    - '&7in crate preview and in'
+    - '&7crate template GUI.'
+    - '&7'
+    - '&6Drag and Drop: &eReplace'
+    - '&6Middle-Click: &eGet Item'
+    slots: 21
+    type: CRATE_CHANGE_REWARD_PREVIEW
+
+  commands:
+    material: COMMAND_BLOCK
+    name: '&eReward Commands'
+    lore:
+    - '&bThe following commands will be'
+    - '&bexecuted when player wins this reward:'
+    - '&a- %commands-list%'
+    - '&7'
+    - '&6Left-Click: &eAdd Command'
+    - '&6Right-Click: &eRemove Command'
+    slots: 23
+    type: CRATE_CHANGE_REWARD_COMMANDS
+
+  chance:
+    material: REDSTONE
+    name: '&eReward Chance'
+    lore:
+    - '&bCurrent: &a%chance%%'
+    - '&7'
+    - '&7Defines the chance, that this'
+    - '&7reward will be selected.'
+    - '&7'
+    - '&6Left-Click: &eChange'
+    slots: 25
+    type: CRATE_CHANGE_REWARD_CHANCE
+
+

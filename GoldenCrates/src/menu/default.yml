@@ -1,0 +1,40 @@
+title: 'Sample Crates Menu'
+size: 36
+crates:
+  virtual:
+    material: ENDER_CHEST
+    name: '%crate_item_name%'
+    lore:
+    - '%crate_item_lore%'
+    - '&7'
+    - '&f» &7You have: &f%keys-amount% keys'
+    - '&f» &7Money cost: &f$%cost-vault%'
+    - '&f» &7Exp cost: &f%cost-exp%'
+    slots: 13
+content:
+  exit:
+    material: 'BARRIER'
+    name: '&cExit'
+    lore: []
+    slots: '31'
+    type: EXIT
+  info:
+    material: 'BOOK'
+    name: '&eWhat is it?'
+    lore:
+    - '&6This is special crates menu,'
+    - '&6where you can open creates with'
+    - '&6virtual keys, that you can buy'
+    - '&6in our store.'
+    slots: '28'
+    type: NONE
+  store:
+    material: 'EMERALD'
+    name: '&eStore'
+    lore:
+    - '&6Buy crate keys in our store'
+    - '&6and use them in this menu!'
+    - '&7'
+    - '&bOur Store: &awww.store.mycraft.com'
+    slots: '34'
+    type: NONE

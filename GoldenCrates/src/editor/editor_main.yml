@@ -1,0 +1,70 @@
+title: 'Golden Crates Editor'
+size: 27
+
+animation:
+  tick: 10
+  progressive: false
+
+content:
+  pane1:
+    material: GRAY_STAINED_GLASS_PANE
+    name: '&7'
+    slots: 0,1,2,3,4,5,6,7,8,18,19,20,21,22,23,24,25,26
+  pane2:
+    material: GREEN_STAINED_GLASS_PANE
+    name: '&7'
+    slots: 9,10,16,17
+  pane3:
+    material: LIME_STAINED_GLASS_PANE
+    name: '&7'
+    slots: 12,13,14
+  exit:
+    material: BARRIER
+    name: '&c&lExit'
+    slots: 22
+    type: EXIT
+
+editor:
+  rewards:
+    material: LIME_SHULKER_BOX
+    name: 'Crate Manager'
+    lore:
+    - '&2Create and edit crates here!'
+    slots: 11
+    type: EDITOR_CRATES
+    animation:
+      auto-play: true
+      start-frame: 0
+    animation-frames:
+      '0':
+        material: LIME_SHULKER_BOX
+        name: '&a&l%GLOBAL%'
+        lore:
+        - '%GLOBAL%'
+      '1':
+        material: LIME_SHULKER_BOX
+        name: '&f&l%GLOBAL%'
+        lore:
+        - '%GLOBAL%'
+
+  effects:
+    material: TRIPWIRE_HOOK
+    name: 'Key Manager'
+    lore:
+    - '&2Create and edit keys here!'
+    slots: 15
+    type: EDITOR_KEYS
+    animation:
+      auto-play: true
+      start-frame: 0
+    animation-frames:
+      '0':
+        material: TRIPWIRE_HOOK
+        name: '&a&l%GLOBAL%'
+        lore:
+        - '%GLOBAL%'
+      '1':
+        material: TRIPWIRE_HOOK
+        name: '&f&l%GLOBAL%'
+        lore:
+        - '%GLOBAL%'

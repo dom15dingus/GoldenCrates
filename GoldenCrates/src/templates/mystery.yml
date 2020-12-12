@@ -1,0 +1,28 @@
+title: 'Opening crate...'
+size: 27
+custom-content:
+  panes:
+    material: 'BLACK_STAINED_GLASS_PANE'
+    name: '&a'
+    lore: []
+    enchanted: false
+    slots: '0,1,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,22,23,24,25,26'
+    type: RAINBOW
+
+spinners:
+  spin-1:
+    time:
+      start-delay-ticks: 0
+      spin-task-ticks: 1
+      roll-every-ticks: 2
+      finish-second: 11
+      finish-random-offset: 0
+    roll-sound: 'BLOCK_NOTE_BLOCK_BELL'
+
+    mode:
+      type: TRAIN
+      hidden:
+        slot-mode: FORWARD # FORWARD, RANDOM, FORWARD_BACK
+
+    reward-slots: '13'
+    win-slots: '13'

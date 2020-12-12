@@ -1,0 +1,30 @@
+main: su.nightexpress.goldencrates.GoldenCrates
+version: 3.10.0
+name: GoldenCrates
+author: NightExpress
+desciption: Perfect crates for your perfect server.
+depend: [NexEngine]
+softdepend: [Citizens, HolographicDisplays, Vault, multiworld, Multiverse-Core, SunLight, PlaceholderAPI]
+api-version: 1.14
+permissions:
+  goldencrates.admin:
+    description: Full plugin access.
+    default: op
+    children:
+      goldencrates.user: true
+      goldencrates.bypass: true
+  goldencrates.user:
+    description: User access.
+    default: true
+  goldencrates.bypass:
+    description: All bypass access.
+    default: op
+    children:
+      goldencrates.bypass.cost: true
+      goldencrates.bypass.cooldown: true
+  goldencrates.bypass.cost:
+    description: Bypass crate open cost.
+    default: op
+  goldencrates.bypass.cooldown:
+    description: Bypass crate open cooldown.
+    default: op

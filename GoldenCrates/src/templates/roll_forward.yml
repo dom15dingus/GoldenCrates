@@ -1,0 +1,28 @@
+title: 'Opening crate...'
+size: 9
+custom-content:
+  panes_1:
+    material: 'BLACK_STAINED_GLASS_PANE'
+    name: '&a&o&nHi&e&o&ndde&c&o&nn &b&o&nRew&d&o&nard'
+    lore: []
+    slots: '0,1,2,3,4,5,6,7,8'
+    type: RAINBOW
+
+
+spinners:
+  row-1:
+    time:
+      start-delay-ticks: 0
+      spin-task-ticks: 2
+      roll-every-ticks: 1
+      finish-second: 5
+      finish-random-offset: 2.5
+    roll-sound: 'BLOCK_NOTE_BLOCK_BELL'
+
+    mode:
+      type: HIDDEN
+      hidden:
+        slot-mode: FORWARD # FORWARD, RANDOM, FORWARD_BACK
+
+    reward-slots: '0,1,2,3,4,5,6,7,8'
+    win-slots: '0,1,2,3,4,5,6,7,8'

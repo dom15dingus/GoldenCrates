@@ -1,0 +1,28 @@
+title: 'Crate Editor'
+size: 54
+object-slots: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+object-name: '&e%crate%'
+object-lore:
+- '&bFile: &a%file%'
+content:
+  next:
+    material: ENDER_EYE
+    name: '&a&lNext Page'
+    slots: 43
+    type: NEXT
+  back:
+    material: ENDER_EYE
+    name: '&c&lPrev. Page'
+    slots: 37
+    type: BACK
+editor:
+  return:
+    material: BARRIER
+    name: '&c&lReturn'
+    slots: 39
+    type: RETURN
+  create:
+    material: ANVIL
+    name: '&a&lNew Crate'
+    slots: 41
+    type: CRATE_CREATE_NEW

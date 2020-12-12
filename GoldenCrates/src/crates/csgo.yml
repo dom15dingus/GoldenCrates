@@ -1,0 +1,80 @@
+name: §bCS:GO Crate
+template: csgo
+cooldown: 30
+attached-citizens: ''
+permission-required: false
+
+key:
+  id: 'csgo'
+
+open-cost:
+  vault: 0.0
+  exp: 0
+
+item:
+  material: ENDER_CHEST
+  amount: 1
+  durability: 0
+  name: '&bCS:GO Crate &7(Right-Click)'
+  lore:
+  - '&7This is CS:GO style crate.'
+  enchanted: true
+  item-flags:
+  - HIDE_ENCHANTS
+  - HIDE_ATTRIBUTES
+  - HIDE_UNBREAKABLE
+  - HIDE_DESTROYS
+  - HIDE_PLACED_ON
+  - HIDE_POTION_EFFECTS
+  unbreakable: false
+
+block:
+  pushback:
+    enabled: true
+  hologram:
+    enabled: false
+    text:
+    - §c§lCS:GO CRATE
+    - §7Get the key at §cwww.myserver.com
+  locations: []
+
+effects:
+  STATIC:
+    type: SIMPLE
+    particle: FLAME
+    sound: NONE
+  USE:
+    type: NONE
+    particle: NONE
+    sound: NONE
+  OPEN:
+    type: FIREWORK
+    particle: FLAME
+    sound: ENTITY_FIREWORK_ROCKET_BLAST
+
+rewards:
+  broadcast: false
+  min: 1
+  max: 1
+  list:
+    '1':
+      name: '§eNew Reward #0'
+      chance: 25.0
+      cmds:
+      - '[CONSOLE] eco give %player% 10'
+      item: 1800020009km800fdlkmspb3e9gmct1qdlimorre0400agrfeln78080
+      preview: 1800020009km800fdlkmspb3e9gmct1qdlimorre0400agrfeln78080
+    '2':
+      name: '§eNew Reward #1'
+      chance: 20.0
+      cmds:
+      - '[CONSOLE] eco give %player% 10'
+      item: 2g0004000j9cg012rb9dpim6sj1cpq3ks3ldlo6mqbe0400agrfeln78080
+      preview: 2g0004000j9cg012rb9dpim6sj1cpq3ks3ldlo6mqbe0400agrfeln78080
+    '3':
+      name: '§eNew Reward #2'
+      chance: 15.0
+      cmds:
+      - '[CONSOLE] eco give %player% 10'
+      item: 2g0004000j9cg01mrb9dpim6sj1cpq3krj5ehk6asivetgn4t2vc9m6uorb0400agrfeln78080
+      preview: 2g0004000j9cg01mrb9dpim6sj1cpq3krj5ehk6asivetgn4t2vc9m6uorb0400agrfeln78080

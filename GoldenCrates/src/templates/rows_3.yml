@@ -1,0 +1,86 @@
+title: 'Opening crate...'
+size: 45
+custom-content:
+  black_panes:
+    material: 'BLACK_STAINED_GLASS_PANE'
+    name: '&a'
+    lore: []
+    enchanted: false
+    slots: '0,1,2,3,4,5,6,7,8,9,10,12,14,16,17,27,28,30,32,34,35,36,37,38,39,40,41,42,43,44'
+  torch:
+    material: 'REDSTONE_TORCH'
+    name: '&c&l&nPrize Line'
+    lore: []
+    enchanted: false
+    slots: '18,26'
+  green_panes1:
+    material: 'LIME_STAINED_GLASS_PANE'
+    name: '&aYour Prize »'
+    lore: []
+    enchanted: false
+    slots: '19'
+    type: RAINBOW_SYNC
+  green_panes2:
+    material: 'LIME_STAINED_GLASS_PANE'
+    name: '&a« Your Prize »'
+    lore: []
+    enchanted: false
+    slots: '21,23'
+    type: RAINBOW_SYNC
+  green_panes3:
+    material: 'LIME_STAINED_GLASS_PANE'
+    name: '&a« Your Prize'
+    lore: []
+    enchanted: false
+    slots: '25'
+    type: RAINBOW_SYNC
+
+
+spinners:
+  row-1:
+    time:
+      start-delay-ticks: 10
+      spin-task-ticks: 2
+      roll-every-ticks: 1
+      finish-second: 7
+    roll-sound: 'BLOCK_NOTE_BLOCK_BELL'
+
+    mode:
+      type: TRAIN
+      hidden:
+        slot-mode: FORWARD_BACK # FORWARD, RANDOM, FORWARD_BACK
+
+    reward-slots: '11,20,29'
+    win-slots: 20
+
+  row-2:
+    time:
+      start-delay-ticks: 200
+      spin-task-ticks: 2
+      roll-every-ticks: 1
+      finish-second: 7
+    roll-sound: 'BLOCK_NOTE_BLOCK_BELL'
+
+    mode:
+      type: TRAIN
+      hidden:
+        slot-mode: FORWARD_BACK # FORWARD, RANDOM, FORWARD_BACK
+
+    reward-slots: '13,22,31'
+    win-slots: 22
+
+  row-3:
+    time:
+      start-delay-ticks: 400
+      spin-task-ticks: 2
+      roll-every-ticks: 1
+      finish-second: 7
+    roll-sound: 'BLOCK_NOTE_BLOCK_BELL'
+
+    mode:
+      type: TRAIN
+      hidden:
+        slot-mode: FORWARD_BACK # FORWARD, RANDOM, FORWARD_BACK
+
+    reward-slots: '15,24,33'
+    win-slots: 24

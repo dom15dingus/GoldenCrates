@@ -1,0 +1,41 @@
+title: 'Opening crate...'
+size: 54
+custom-content:
+  panes:
+    material: BLACK_STAINED_GLASS_PANE
+    name: '&a'
+    lore: []
+    enchanted: false
+    slots: 0,1,2,3,5,6,7,8,9,17,18,20,21,23,24,26,27,29,30,31,32,33,35,36,44,45,46,47,48,49,50,51,52,53
+    type: RAINBOW_SYNC
+  netherstar1:
+    material: NETHER_STAR
+    name: '&c&l↓ PRIZE ↓'
+    lore: []
+    enchanted: true
+    slots: 4
+    type: NONE
+  netherstar2:
+    material: NETHER_STAR
+    name: '&c&l↑ PRIZE ↑'
+    lore: []
+    enchanted: true
+    slots: 22
+    type: NONE
+
+spinners:
+  spin-1:
+    time:
+      start-delay-ticks: 0
+      spin-task-ticks: 2
+      roll-every-ticks: 2
+      finish-second: 7
+    roll-sound: 'block_note_block_xylophone'
+
+    mode:
+      type: TRAIN
+      hidden:
+        slot-mode: FORWARD # FORWARD, RANDOM, FORWARD_BACK
+
+    reward-slots: '14,15,16,25,34,43,42,41,40,39,38,37,28,19,10,11,12,13'
+    win-slots: '13'

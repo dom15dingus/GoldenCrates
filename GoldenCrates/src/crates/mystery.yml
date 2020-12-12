@@ -1,0 +1,75 @@
+name: §dMystery Crate
+template: mystery
+cooldown: 30
+attached-citizens: ''
+permission-required: false
+
+key:
+  id: mystery
+
+open-cost:
+  vault: 0.0
+  exp: 0
+
+item:
+  material: ENDER_CHEST
+  amount: 1
+  durability: 0
+  name: '&dMystery Crate &7(Right-Click)'
+  lore:
+  - '&7This is &dMystery &7crate.'
+  enchanted: true
+  item-flags:
+  - '*'
+  unbreakable: false
+
+block:
+  pushback:
+    enabled: true
+  hologram:
+    enabled: true
+    text:
+    - §c§lMYSTERY CRATE
+    - §7Get the key at §cwww.myserver.com
+  locations: []
+
+effects:
+  STATIC:
+    type: SIMPLE
+    particle: FLAME
+    sound: NONE
+  USE:
+    type: NONE
+    particle: NONE
+    sound: NONE
+  OPEN:
+    type: FIREWORK
+    particle: FLAME
+    sound: ENTITY_FIREWORK_ROCKET_BLAST
+
+rewards:
+  broadcast: true
+  min: 1
+  max: 1
+  list:
+    '1':
+      name: Melon
+      chance: 25.0
+      cmds:
+      - '[CONSOLE] eco give %player% 10'
+      item: 1800020009km800fdlkmspb3e9gmct1qdlimorre0400agrfeln78080
+      preview: 1800020009km800fdlkmspb3e9gmct1qdlimorre0400agrfeln78080
+    '2':
+      name: Pumpkin
+      chance: 20.0
+      cmds:
+      - '[CONSOLE] eco give %player% 10'
+      item: 2g0004000j9cg012rb9dpim6sj1cpq3ks3ldlo6mqbe0400agrfeln78080
+      preview: 2g0004000j9cg012rb9dpim6sj1cpq3ks3ldlo6mqbe0400agrfeln78080
+    '3':
+      name: Nether Wart Block
+      chance: 15.0
+      cmds:
+      - '[CONSOLE] eco give %player% 10'
+      item: 2g0004000j9cg01mrb9dpim6sj1cpq3krj5ehk6asivetgn4t2vc9m6uorb0400agrfeln78080
+      preview: 2g0004000j9cg01mrb9dpim6sj1cpq3krj5ehk6asivetgn4t2vc9m6uorb0400agrfeln78080
