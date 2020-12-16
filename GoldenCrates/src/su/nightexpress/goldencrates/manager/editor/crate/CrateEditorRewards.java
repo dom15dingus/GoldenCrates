@@ -172,6 +172,7 @@ public class CrateEditorRewards extends NGUI<GoldenCrates> {
     	    	}
 				
 				if (e.isShiftClick()) {
+					
 					// Reward position move.
 					List<CrateReward> all = new ArrayList<>(this.crate.getRewards());
 					int index = all.indexOf(reward);
