@@ -162,6 +162,7 @@ public class CrateEditorRewards extends NGUI<GoldenCrates> {
 			}
 			
 			icon.setClick((p2, type, e) -> {
+				
 				// Reward deletion.
 				if (e.getClick() == ClickType.MIDDLE) {
     	    		crate.deleteReward(reward.getId());
