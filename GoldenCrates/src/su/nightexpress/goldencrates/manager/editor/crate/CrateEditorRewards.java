@@ -162,15 +162,15 @@ public class CrateEditorRewards extends NGUI<GoldenCrates> {
 			}
 			
 			icon.setClick((p2, type, e) -> {
+				// Reward deletion.
+				if (e.getClick() == ClickType.MIDDLE) {
+    	    		crate.deleteReward(reward.getId());
+    	    		plugin.getCrateManager().save(crate);
+    	    		open(p2, 1);
+    	    		return;
+    	    	}
+				
 				if (e.isShiftClick()) {
-					// Reward deletion.
-					if (e.getClick() == ClickType.MIDDLE) {
-	    	    		crate.deleteReward(reward.getId());
-	    	    		plugin.getCrateManager().save(crate);
-	    	    		open(p2, 1);
-	    	    		return;
-	    	    	}
-					
 					// Reward position move.
 					List<CrateReward> all = new ArrayList<>(this.crate.getRewards());
 					int index = all.indexOf(reward);

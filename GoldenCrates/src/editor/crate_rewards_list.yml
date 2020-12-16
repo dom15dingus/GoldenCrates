@@ -8,7 +8,7 @@ object-lore:
 - '&7'
 - '&e&l     MANAGEMENT:'
 - '&6Left-Click: &eEdit'
-- '&6Shift+Middle: &eDelete'
+- '&6Middle-Click: &eDelete'
 - '&6Shift+Left: &eMove Forward'
 - '&6Shift+Right: &eMove Back'
 

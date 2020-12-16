@@ -345,9 +345,8 @@ public class CrateManager extends IManager<GoldenCrates> {
 					rewNameBuild.append(", ");
 				}
 				rewNameBuild.append(reward.getName());
-				
-				this.broadcastReward(player, crate, rewNameBuild.toString());
 			});
+			this.broadcastReward(player, crate, rewNameBuild.toString());
 		}
 		
 		if (crateKey != null) {
