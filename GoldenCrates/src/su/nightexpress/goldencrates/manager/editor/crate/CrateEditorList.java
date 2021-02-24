@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import su.nexmedia.engine.config.api.JYML;
 import su.nexmedia.engine.manager.api.gui.ContentType;
@@ -23,6 +21,7 @@ import su.nexmedia.engine.utils.CollectionsUT;
 import su.nexmedia.engine.utils.StringUT;
 import su.nightexpress.goldencrates.GoldenCrates;
 import su.nightexpress.goldencrates.manager.crate.Crate;
+import su.nightexpress.goldencrates.manager.editor.CrateEditorHandler;
 import su.nightexpress.goldencrates.manager.editor.CrateEditorType;
 
 public class CrateEditorList extends NGUI<GoldenCrates> {
@@ -31,59 +30,59 @@ public class CrateEditorList extends NGUI<GoldenCrates> {
 	private String objName;
 	private List<String> objLore;
 	
-	public CrateEditorList(@NotNull GoldenCrates plugin, @NotNull JYML cfg) {
-		super(plugin, cfg, "");
+	public CrateEditorList(@NotNull GoldenCrates plugin) {
+		super(plugin, CrateEditorHandler.CRATE_LIST, "");
+		JYML cfg = CrateEditorHandler.CRATE_LIST;
+		
 		this.objSlots = cfg.getIntArray("object-slots");
 		this.objName = StringUT.color(cfg.getString("object-name", "%crate%"));
 		this.objLore = StringUT.color(cfg.getStringList("object-lore"));
 		
-		GuiClick click = new GuiClick() {
-			@Override
-			public void click(Player p, @Nullable Enum<?> type, InventoryClickEvent e) {
-				if (type == null) return;
-				
-				Class<?> c = type.getClass();
-				if (c.equals(ContentType.class)) {
-					ContentType type2 = (ContentType) type;
-					switch (type2) {
-						case EXIT: {
-							p.closeInventory();
-							break;
-						}
-						case RETURN: {
-							plugin.openEditor(p);
-							break;
-						}
-						case NEXT: {
-							open(p, getUserPage(p, 0) + 1);
-							break;
-						}
-						case BACK: {
-							open(p, getUserPage(p, 0) - 1);
-							break;
-						}
-						default: {
-							break;
-						}
+		GuiClick click = (p, type, e) -> {
+			if (type == null) return;
+			
+			Class<?> clazz = type.getClass();
+			if (clazz.equals(ContentType.class)) {
+				ContentType type2 = (ContentType) type;
+				switch (type2) {
+					case EXIT: {
+						p.closeInventory();
+						break;
+					}
+					case RETURN: {
+						plugin.openEditor(p);
+						break;
+					}
+					case NEXT: {
+						open(p, getUserPage(p, 0) + 1);
+						break;
+					}
+					case BACK: {
+						open(p, getUserPage(p, 0) - 1);
+						break;
+					}
+					default: {
+						break;
 					}
 				}
-				else if (c.equals(CrateEditorType.class)) {
-					CrateEditorType type2 = (CrateEditorType) type;
-					switch (type2) {
-						case CRATE_CREATE_NEW: {
-							EditorManager.startEdit(p, null, type2);
-			    			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_ID.getMsg());
-			    			p.closeInventory();
-							break;
-						}
-						default: {
-							break;
-						}
+				return;
+			}
+			
+			if (clazz.equals(CrateEditorType.class)) {
+				CrateEditorType type2 = (CrateEditorType) type;
+				switch (type2) {
+					case CRATE_CREATE_NEW: {
+						EditorManager.startEdit(p, null, type2);
+		    			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_ID.getMsg());
+		    			p.closeInventory();
+						break;
+					}
+					default: {
+						break;
 					}
 				}
 			}
 		};
-		
 		
 		for (String sId : cfg.getSection("content")) {
 			GuiItem guiItem = cfg.getGuiItem("content." + sId, ContentType.class);

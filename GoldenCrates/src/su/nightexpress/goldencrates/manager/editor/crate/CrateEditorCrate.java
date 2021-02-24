@@ -25,14 +25,18 @@ import su.nexmedia.engine.manager.api.gui.NGUI;
 import su.nexmedia.engine.manager.editor.EditorHandler;
 import su.nexmedia.engine.manager.editor.EditorManager;
 import su.nexmedia.engine.utils.CollectionsUT;
+import su.nexmedia.engine.utils.FileUT;
 import su.nexmedia.engine.utils.ItemUT;
 import su.nexmedia.engine.utils.LocUT;
 import su.nexmedia.engine.utils.NumberUT;
+import su.nexmedia.engine.utils.StringUT;
 import su.nexmedia.engine.utils.TimeUT;
 import su.nightexpress.goldencrates.GoldenCrates;
 import su.nightexpress.goldencrates.Perms;
+import su.nightexpress.goldencrates.config.Config;
 import su.nightexpress.goldencrates.manager.crate.Crate;
 import su.nightexpress.goldencrates.manager.crate.CrateEffect;
+import su.nightexpress.goldencrates.manager.editor.CrateEditorHandler;
 import su.nightexpress.goldencrates.manager.editor.CrateEditorHub;
 import su.nightexpress.goldencrates.manager.editor.CrateEditorType;
 
@@ -42,7 +46,7 @@ public class CrateEditorCrate extends NGUI<GoldenCrates> {
 	private CrateEditorRewards editorRewards;
 	
 	public CrateEditorCrate(@NotNull GoldenCrates plugin, @NotNull Crate crate) {
-		super(plugin, GoldenCrates.EDITOR_CRATE, "");
+		super(plugin, CrateEditorHandler.CRATE_MAIN, "");
 		this.crate = crate;
 		
 		GuiClick clickHandler = (p, type, e) -> {
@@ -68,8 +72,10 @@ public class CrateEditorCrate extends NGUI<GoldenCrates> {
 						break;
 					}
 				}
+				return;
 			}
-			else if (clazz.equals(CrateEditorType.class)) {
+			
+			if (clazz.equals(CrateEditorType.class)) {
 				CrateEditorType type2 = (CrateEditorType) type;
 				ClickType click = e.getClick();
 				
@@ -193,18 +199,33 @@ public class CrateEditorCrate extends NGUI<GoldenCrates> {
 						
 						break;
 					}
-					case CRATE_CHANGE_TEMPLATE: {
-						if (click == ClickType.LEFT) {
-							EditorManager.startEdit(p, crate, type2);
+					case CRATE_CHANGE_GUI: {
+						if (e.isLeftClick()) {
+							if (e.isShiftClick()) {
+								crate.setTemplate(null);
+								break;
+							}
+							p.closeInventory();
+							EditorManager.startEdit(p, crate, CrateEditorType.CRATE_CHANGE_GUI_TEMPLATE);
 			       			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Template.getMsg());
-			       			p.closeInventory();
 			       			EditorManager.sendClickableTips(p, plugin.getTemplateManager().getTemplateIds());
 			       			return;
+						}
+						else if (e.isRightClick()) {
+							if (e.isShiftClick()) {
+								crate.setPreviewId(null);
+								break;
+							}
+							List<String> previews = FileUT.getFiles(plugin.getDataFolder() + Config.DIR_PREVIEWS, true)
+									.stream().map(f -> f.getName().replace(".yml", "")).collect(Collectors.toList());
+							
+							p.closeInventory();
+							EditorManager.startEdit(p, crate, CrateEditorType.CRATE_CHANGE_GUI_PREVIEW);
+			       			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Preview.getMsg());
+			       			EditorManager.sendClickableTips(p, previews);
+			       			return;
 			   			}
-			   			else if (click == ClickType.RIGHT) {
-			   				crate.setTemplate(null);
-			   			}
-						break;
+						return;
 					}
 					case CRATE_CHANGE_OPEN_COST: {
 						if (e.getClick() == ClickType.MIDDLE) {
@@ -235,8 +256,7 @@ public class CrateEditorCrate extends NGUI<GoldenCrates> {
 			}
 		};
 		
-		JYML cfg = GoldenCrates.EDITOR_CRATE;
-		
+		JYML cfg = CrateEditorHandler.CRATE_MAIN;
 		for (String sId : cfg.getSection("content")) {
 			GuiItem guiItem = cfg.getGuiItem("content." + sId, ContentType.class);
 			if (guiItem == null) continue;
@@ -287,8 +307,8 @@ public class CrateEditorCrate extends NGUI<GoldenCrates> {
 	}
 
 	@Override
-	protected void replaceMeta(@NotNull Player p, @NotNull ItemStack item, @NotNull GuiItem guiItem) {
-		super.replaceMeta(p, item, guiItem);
+	protected void replaceMeta(@NotNull Player player, @NotNull ItemStack item, @NotNull GuiItem guiItem) {
+		super.replaceMeta(player, item, guiItem);
 		
 		ItemMeta meta = item.getItemMeta();
 		if (meta == null) return;
@@ -302,7 +322,8 @@ public class CrateEditorCrate extends NGUI<GoldenCrates> {
 			.replace("%name%", crate.getName())
 			.replace("%cd-format%", TimeUT.formatTime(crate.getOpenCooldown() * 1000L))
 			.replace("%cd-raw%", String.valueOf(crate.getOpenCooldown()))
-			.replace("%template%", crate.getTemplate())
+			.replace("%template%", crate.hasTemplate() ? crate.getTemplate() : StringUT.color("&c<Disabled>"))
+			.replace("%preview%", crate.hasPreview() ? crate.getPreviewId() : StringUT.color("&c<Disabled>"))
 			.replace("%icon%", ItemUT.getItemName(crate.getItem()))
 			.replace("%key-id%", keyId == null ? "-" : keyId)
 			.replace("%block-hologram-enabled%", plugin.lang().getBool(crate.isHologramEnabled()))

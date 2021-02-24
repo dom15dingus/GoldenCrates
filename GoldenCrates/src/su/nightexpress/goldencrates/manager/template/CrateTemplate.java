@@ -355,7 +355,7 @@ public class CrateTemplate extends LoadableItem implements Cleanable {
 	    	MsgUT.sound(this.player, this.getSpinner().getRollSound());
 	    	
 	    	CrateReward reward = this.crate.rollReward();
-	    	ItemStack preview = reward.getPreviewFormatted();
+	    	ItemStack preview = reward.getPreview();
 	    	DataUT.setData(preview, TAG_REWARD_ID, reward.getId());
 	    	
 	    	if (this.getSpinner().getModeType() == SpinnerModeType.TRAIN) {
@@ -456,6 +456,8 @@ public class CrateTemplate extends LoadableItem implements Cleanable {
 	    	if (this.player == null) return;
 	    	
 	    	Set<SpinTask> spinTasks = TemplateManager.SPIN_TASKS.get(player);
+	    	if (spinTasks == null) return;
+	    	
 	    	boolean isAllStopped = spinTasks.stream().allMatch(task -> task.isCancelled());
 	    	if (!isAllStopped) return;
 	    	

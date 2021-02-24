@@ -6,12 +6,10 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import su.nexmedia.engine.config.api.JYML;
 import su.nexmedia.engine.manager.api.gui.ContentType;
@@ -23,6 +21,7 @@ import su.nexmedia.engine.utils.ItemUT;
 import su.nightexpress.goldencrates.GoldenCrates;
 import su.nightexpress.goldencrates.manager.crate.Crate;
 import su.nightexpress.goldencrates.manager.crate.CrateReward;
+import su.nightexpress.goldencrates.manager.editor.CrateEditorHandler;
 import su.nightexpress.goldencrates.manager.editor.CrateEditorType;
 
 public class CrateEditorReward extends NGUI<GoldenCrates> {
@@ -30,126 +29,124 @@ public class CrateEditorReward extends NGUI<GoldenCrates> {
 	private CrateReward reward;
 	
 	public CrateEditorReward(@NotNull GoldenCrates plugin, @NotNull CrateReward reward) {
-		super(plugin, GoldenCrates.EDITOR_REWARD, "");
+		super(plugin, CrateEditorHandler.CRATE_REWARD_MAIN, "");
 		this.reward = reward;
 		Crate crate = reward.getCrate();
 		
-		GuiClick click = new GuiClick() {
-			@Override
-			public void click(Player p, @Nullable Enum<?> type, InventoryClickEvent e) {
-				if (type == null) return;
-				
-				ClickType click = e.getClick();
-				Class<?> clazz = type.getClass();
-				if (clazz.equals(ContentType.class)) {
-					ContentType type2 = (ContentType) type;
-					switch (type2) {
-						case EXIT: {
-							p.closeInventory();
-							break;
-						}
-						case RETURN: {
-							crate.getEditor().openEditorRewards(p);
-							break;
-						}
-						default: {
-							break;
-						}
+		GuiClick click = (p, type, e) -> {
+			if (type == null) return;
+			
+			ClickType clickType = e.getClick();
+			Class<?> clazz = type.getClass();
+			if (clazz.equals(ContentType.class)) {
+				ContentType type2 = (ContentType) type;
+				switch (type2) {
+					case EXIT: {
+						p.closeInventory();
+						break;
+					}
+					case RETURN: {
+						crate.getEditor().openEditorRewards(p);
+						break;
+					}
+					default: {
+						break;
 					}
 				}
-				else if (clazz.equals(CrateEditorType.class)) {
-					CrateEditorType type2 = (CrateEditorType) type;
-					
-					switch (type2) {
-						case CRATE_CHANGE_REWARD_NAME: {
-							if (e.isRightClick()) {
-								ItemStack item = reward.getItem();
-								if (item != null) {
-									reward.setName(ItemUT.getItemName(item));
-									plugin.getCrateManager().save(crate);
-					    			open(p, 1);
-								}
-								break;
-							}
-							EditorManager.startEdit(p, reward, type2);
-							EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Name.getMsg());
-			    			p.closeInventory();
-							break;
-						}
-						case CRATE_CHANGE_REWARD_PREVIEW: {
-							if (click == ClickType.MIDDLE) {
-			    				ItemUT.addItem(p, reward.getPreview());
-			    				return;
-			    			}
-			    			else {
-				    			ItemStack cu = e.getCursor();
-					    		if (cu != null && cu.getType() != Material.AIR) {
-					    			reward.setPreview(cu);
-					    			e.getView().setCursor(null);
-					    			plugin.getCrateManager().save(crate);
-					    			open(p, 1);
-					    		}
-			    			}
-							break;
-						}
-						case CRATE_CHANGE_REWARD_ITEM: {
-			    			if (click == ClickType.MIDDLE) {
-			    				ItemStack item = reward.getItem();
-			    				if (item != null) {
-			    					ItemUT.addItem(p, item);
-			    				}
-			    				return;
-			    			}
-			    			else {
-			    				if (e.isShiftClick() && e.isRightClick()) {
-				    				reward.setItem(null);
-				    			}
-				    			else {
-				    				ItemStack cu = e.getCursor();
-					    			if (cu != null && cu.getType() != Material.AIR) {
-					    				reward.setItem(cu);
-					    				e.getView().setCursor(null);
-					    			}
-			    				}
-			    				plugin.getCrateManager().save(crate);
+				return;
+			}
+			
+			if (clazz.equals(CrateEditorType.class)) {
+				CrateEditorType type2 = (CrateEditorType) type;
+				
+				switch (type2) {
+					case CRATE_CHANGE_REWARD_NAME: {
+						if (e.isRightClick()) {
+							ItemStack item = reward.getItem();
+							if (item != null) {
+								reward.setName(ItemUT.getItemName(item));
+								plugin.getCrateManager().save(crate);
 				    			open(p, 1);
-			    			}
+							}
 							break;
 						}
-						case CRATE_CHANGE_REWARD_CHANCE: {
-							EditorManager.startEdit(p, reward, type2);
-							EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Chance.getMsg());
-			    			p.closeInventory();
-							break;
-						}
-						case CRATE_CHANGE_REWARD_COMMANDS: {
-							if (e.isRightClick()) {
-								List<String> cmds = reward.getCommands();
-			    				if (!cmds.isEmpty()) {
-			    					cmds.remove(cmds.size()-1);
-			    				}
-			    				plugin.getCrateManager().save(crate);
-			    				open(p, 1);
+						EditorManager.startEdit(p, reward, type2);
+						EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Name.getMsg());
+		    			p.closeInventory();
+						break;
+					}
+					case CRATE_CHANGE_REWARD_PREVIEW: {
+						if (clickType == ClickType.MIDDLE) {
+		    				ItemUT.addItem(p, reward.getPreview());
+		    				return;
+		    			}
+		    			else {
+			    			ItemStack cu = e.getCursor();
+				    		if (cu != null && cu.getType() != Material.AIR) {
+				    			reward.setPreview(cu);
+				    			e.getView().setCursor(null);
+				    			plugin.getCrateManager().save(crate);
+				    			open(p, 1);
+				    		}
+		    			}
+						break;
+					}
+					case CRATE_CHANGE_REWARD_ITEM: {
+		    			if (clickType == ClickType.MIDDLE) {
+		    				ItemStack item = reward.getItem();
+		    				if (item != null) {
+		    					ItemUT.addItem(p, item);
+		    				}
+		    				return;
+		    			}
+		    			else {
+		    				if (e.isShiftClick() && e.isRightClick()) {
+			    				reward.setItem(null);
 			    			}
 			    			else {
-			    				EditorManager.startEdit(p, reward, type2);
-			        			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Command.getMsg());
-			        			plugin.lang().Editor_Tip_Commands.send(p);
-			        			p.closeInventory();
-			        			return;
-			    			}
-							break;
-						}
-						default: {
-							break;
-						}
+			    				ItemStack cu = e.getCursor();
+				    			if (cu != null && cu.getType() != Material.AIR) {
+				    				reward.setItem(cu);
+				    				e.getView().setCursor(null);
+				    			}
+		    				}
+		    				plugin.getCrateManager().save(crate);
+			    			open(p, 1);
+		    			}
+						break;
+					}
+					case CRATE_CHANGE_REWARD_CHANCE: {
+						EditorManager.startEdit(p, reward, type2);
+						EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Chance.getMsg());
+		    			p.closeInventory();
+						break;
+					}
+					case CRATE_CHANGE_REWARD_COMMANDS: {
+						if (e.isRightClick()) {
+							List<String> cmds = reward.getCommands();
+		    				if (!cmds.isEmpty()) {
+		    					cmds.remove(cmds.size()-1);
+		    				}
+		    				plugin.getCrateManager().save(crate);
+		    				open(p, 1);
+		    			}
+		    			else {
+		    				EditorManager.startEdit(p, reward, type2);
+		        			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_Command.getMsg());
+		        			EditorManager.sendCommandTips(p);
+		        			p.closeInventory();
+		        			return;
+		    			}
+						break;
+					}
+					default: {
+						break;
 					}
 				}
 			}
 		};
 		
-		JYML cfg = GoldenCrates.EDITOR_REWARD;
-		
+		JYML cfg = CrateEditorHandler.CRATE_REWARD_MAIN;
 		for (String sId : cfg.getSection("content")) {
 			GuiItem guiItem = cfg.getGuiItem("content." + sId, ContentType.class);
 			if (guiItem == null) continue;
@@ -190,38 +187,23 @@ public class CrateEditorReward extends NGUI<GoldenCrates> {
 	protected boolean ignoreNullClick() {
 		return false;
 	}
-	
-	@Override
-	protected void replaceMeta(@NotNull Player player, @NotNull Inventory inv) {
-		super.replaceMeta(player, inv);
-		
-		for (int slot = 0; slot < inv.getSize(); slot++) {
-			GuiItem guiItem = this.getButton(player, slot);
-			if (guiItem == null) continue;
-			
-			Enum<?> type = guiItem.getType();
-			if (type == null) continue;
-			
-			ItemStack item = inv.getItem(slot);
-			if (item == null) continue;
-			
-			if (type == CrateEditorType.CRATE_CHANGE_REWARD_PREVIEW) {
-				item.setType(reward.getPreview().getType());
-				item.setAmount(reward.getPreview().getAmount());
-			}
-			else if (type == CrateEditorType.CRATE_CHANGE_REWARD_ITEM) {
-				ItemStack rewardItem = reward.getItem();
-				if (rewardItem != null) {
-					item.setType(rewardItem.getType());
-					item.setAmount(rewardItem.getAmount());
-				}
-			}
-		}
-	}
 
 	@Override
 	protected void replaceMeta(@NotNull Player player, @NotNull ItemStack item, @NotNull GuiItem guiItem) {
 		super.replaceMeta(player, item, guiItem);
+		
+		Enum<?> type = guiItem.getType();
+		if (type == CrateEditorType.CRATE_CHANGE_REWARD_PREVIEW) {
+			item.setType(reward.getPreview().getType());
+			item.setAmount(reward.getPreview().getAmount());
+		}
+		else if (type == CrateEditorType.CRATE_CHANGE_REWARD_ITEM) {
+			ItemStack rewardItem = reward.getItem();
+			if (rewardItem != null) {
+				item.setType(rewardItem.getType());
+				item.setAmount(rewardItem.getAmount());
+			}
+		}
 		
 		ItemMeta meta = item.getItemMeta();
 		if (meta == null) return;

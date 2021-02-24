@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,7 +16,6 @@ import su.nexmedia.engine.utils.ItemUT;
 import su.nexmedia.engine.utils.PlayerUT;
 import su.nexmedia.engine.utils.StringUT;
 import su.nightexpress.goldencrates.GoldenCrates;
-import su.nightexpress.goldencrates.config.Config;
 import su.nightexpress.goldencrates.manager.editor.crate.CrateEditorReward;
 
 public class CrateReward implements Editable, Cleanable {
@@ -42,9 +40,9 @@ public class CrateReward implements Editable, Cleanable {
 			25D,										// Chance
 			"New Reward #" + crate.getRewards().size(), // Name
 			
+			new ItemStack(Material.APPLE)	,			// Preview
 			new ItemStack(Material.APPLE), 				// Item
-			new ArrayList<>(),							// Commands
-			new ItemStack(Material.APPLE)				// Preview
+			new ArrayList<>()							// Commands
 		);
 	}
 
@@ -53,11 +51,11 @@ public class CrateReward implements Editable, Cleanable {
 			@NotNull String id,
 			
 			double chance,
-			String name,
+			@NotNull String name,
 			
-			ItemStack item,
-			List<String> cmd,
-			ItemStack preview
+			@Nullable ItemStack preview,
+			@Nullable ItemStack item,
+			@NotNull List<String> cmd
 			) {
 		this.crate = crate;
 		this.id = id.toLowerCase();
@@ -136,44 +134,9 @@ public class CrateReward implements Editable, Cleanable {
 		return new ItemStack(this.preview);
 	}
 	
-	@NotNull
-	public ItemStack getPreviewFormatted() {
-		ItemStack original = this.getPreview();
-		
-		ItemMeta meta = original.getItemMeta();
-		if (meta == null) return original;
-		
-		if (!meta.hasDisplayName()) {
-			meta.setDisplayName(this.getName());
-		}
-		
-		List<String> lore = new ArrayList<>();
-		for (String line : Config.REWARD_PREVIEW_LORE) {
-			if (line.equalsIgnoreCase("%item_lore%")) {
-				List<String> mLore = meta.getLore();
-				if (mLore != null) {
-					for (String lineMeta : mLore) {
-						lore.add(lineMeta);
-					}
-				}
-				continue;
-			}
-			lore.add(line.replace("%chance%", String.valueOf(this.chance)));
-		}
-		meta.setLore(lore);
-		original.setItemMeta(meta);
-		
-		return original;
-	}
-	
 	public void setPreview(@Nullable ItemStack item) {
 		if (item == null) {
-			if (this.item != null) {
-				this.preview = this.getItem();
-			}
-			else {
-				this.preview = new ItemStack(Material.BARRIER);
-			}
+			this.preview = this.item != null ? this.getItem() : new ItemStack(Material.BARRIER);
 		}
 		else {
 			this.preview = new ItemStack(item);

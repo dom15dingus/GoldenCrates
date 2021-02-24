@@ -1,6 +1,5 @@
 package su.nightexpress.goldencrates;
 
-import java.io.File;
 import java.sql.SQLException;
 
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +9,7 @@ import su.nexmedia.engine.commands.api.IGeneralCommand;
 import su.nexmedia.engine.config.api.JYML;
 import su.nexmedia.engine.hooks.Hooks;
 import su.nexmedia.engine.hooks.external.citizens.CitizensHK;
+import su.nightexpress.goldencrates.commands.DropCommand;
 import su.nightexpress.goldencrates.commands.GiveCommand;
 import su.nightexpress.goldencrates.commands.GivekeyCommand;
 import su.nightexpress.goldencrates.commands.KeysCommand;
@@ -36,17 +36,6 @@ public class GoldenCrates extends NexDataPlugin<GoldenCrates, CrateUser> {
 	
 	private Config config;
 	private Lang lang;
-	
-	public static JYML EDITOR_MAIN;
-	
-	public static JYML EDITOR_CRATE_LIST;
-	public static JYML EDITOR_CRATE;
-	public static JYML EDITOR_REWARD_LIST;
-	public static JYML EDITOR_REWARD;
-	public static JYML EDITOR_EFFECTS;
-	
-	public static JYML EDITOR_KEY_LIST;
-	public static JYML EDITOR_KEY_KEY;
 	
 	private CrateUserData dataHandler;
 	private KeyManager keyManager;
@@ -149,6 +138,7 @@ public class GoldenCrates extends NexDataPlugin<GoldenCrates, CrateUser> {
 
 	@Override
 	public void registerCmds(@NotNull IGeneralCommand<GoldenCrates> mainCommand) {
+		mainCommand.addSubCommand(new DropCommand(this));
 		mainCommand.addSubCommand(new GiveCommand(this));
 		mainCommand.addSubCommand(new GivekeyCommand(this));
 		mainCommand.addSubCommand(new MenuCommand(this));
@@ -159,36 +149,8 @@ public class GoldenCrates extends NexDataPlugin<GoldenCrates, CrateUser> {
 	public void registerEditor() {
     	this.getConfigManager().extract("editor");
     	
-    	if (EDITOR_MAIN == null || !EDITOR_MAIN.reload()) {
-    		EDITOR_MAIN = new JYML(new File(this.getDataFolder() + "/editor/editor_main.yml"));
-    	}
-    	
-    	
-    	if (EDITOR_CRATE_LIST == null || !EDITOR_CRATE_LIST.reload()) {
-    		EDITOR_CRATE_LIST = new JYML(new File(this.getDataFolder() + "/editor/crate_list.yml"));
-    	}
-    	if (EDITOR_CRATE == null || !EDITOR_CRATE.reload()) {
-    		EDITOR_CRATE = new JYML(new File(this.getDataFolder() + "/editor/crate_main.yml"));
-    	}
-    	if (EDITOR_REWARD_LIST == null || !EDITOR_REWARD_LIST.reload()) {
-    		EDITOR_REWARD_LIST = new JYML(new File(this.getDataFolder() + "/editor/crate_rewards_list.yml"));
-    	}
-    	if (EDITOR_REWARD == null || !EDITOR_REWARD.reload()) {
-    		EDITOR_REWARD = new JYML(new File(this.getDataFolder() + "/editor/crate_rewards_reward.yml"));
-    	}
-    	if (EDITOR_EFFECTS == null || !EDITOR_EFFECTS.reload()) {
-    		EDITOR_EFFECTS = new JYML(new File(this.getDataFolder() + "/editor/crate_effects.yml"));
-    	}
-    	
-    	
-    	if (EDITOR_KEY_LIST == null || !EDITOR_KEY_LIST.reload()) {
-    		EDITOR_KEY_LIST = new JYML(new File(this.getDataFolder() + "/editor/key_list.yml"));
-    	}
-    	if (EDITOR_KEY_KEY == null || !EDITOR_KEY_KEY.reload()) {
-    		EDITOR_KEY_KEY = new JYML(new File(this.getDataFolder() + "/editor/key_key.yml"));
-    	}
-    	
-		CrateEditorHub main = new CrateEditorHub(this, EDITOR_MAIN);
+    	JYML cfg = JYML.loadOrExtract(this, "/editor/editor_main.yml");
+		CrateEditorHub main = new CrateEditorHub(this, cfg);
 		this.editorHandler = new CrateEditorHandler(this, main);
 	}
 

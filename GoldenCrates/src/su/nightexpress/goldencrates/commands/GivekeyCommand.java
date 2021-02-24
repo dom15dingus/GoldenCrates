@@ -80,7 +80,7 @@ public class GivekeyCommand extends ISubCommand<GoldenCrates> {
 		}
 		else {
 			if (!plugin.getKeyManager().giveKey(pName, crateKey, amount)) {
-				plugin.lang().Command_GiveKey_Error_NoUser.send(sender, true);
+				plugin.lang().Error_NoData.replace("%player%", pName).send(sender, true);
 				return;
 			}
 		}

@@ -1,0 +1,99 @@
+title: '            &nCrate Preview'
+size: 45
+
+animation:
+  tick: 10
+  progressive: true
+
+reward-slots: 1,2,3,5,6,7,19,20,21,23,24,25,37,38,39,41,42,43
+reward-lore:
+- '%reward-lore%'
+- ''
+- '&7Chance: &b%reward-chance%%'
+
+content:
+  panel_orange_0:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '1':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 0
+
+  panel_orange_4:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '2':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 4
+
+  panel_orange_8:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '3':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 8
+
+  panel_orange_18:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '4':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 18
+
+  panel_orange_22:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '5':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 22
+
+  panel_orange_26:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '6':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 26
+
+  panel_orange_36:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '7':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 36
+
+  panel_orange_40:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '8':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 40
+
+  panel_orange_44:
+    material: 'ORANGE_STAINED_GLASS_PANE'
+    animation:
+      auto-play: true
+    animation-frames:
+      '9':
+        material: 'WHITE_STAINED_GLASS_PANE'
+    slots: 44
+
+
+  panel_yellow:
+    material: 'YELLOW_STAINED_GLASS_PANE'
+    slots: 9,10,11,12,13,14,15,16,17,27,28,29,30,31,32,33,34,35

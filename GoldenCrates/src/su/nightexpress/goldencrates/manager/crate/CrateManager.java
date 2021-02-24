@@ -61,7 +61,6 @@ public class CrateManager extends IManager<GoldenCrates> {
 	private Map<String, Crate> crates;
 	
 	private HologramsHook holoHook;
-	private VaultHK vaultHook;
 	
 	public CrateManager(@NotNull GoldenCrates plugin) {
 		super(plugin);
@@ -70,10 +69,9 @@ public class CrateManager extends IManager<GoldenCrates> {
 	@Override
 	public void setup() {
 		this.crates = new HashMap<>();
-		this.plugin.getConfigManager().extract(Config.DIR_CRATES);
-		
 		this.holoHook = plugin.getHook(HologramsHook.class);
-		this.vaultHook = plugin.getVault();
+		this.plugin.getConfigManager().extract(Config.DIR_CRATES);
+		this.plugin.getConfigManager().extract(Config.DIR_PREVIEWS);
 		
 		for (JYML cfg : JYML.loadAll(plugin.getDataFolder() + Config.DIR_CRATES, true)) {
 			try {
@@ -264,29 +262,32 @@ public class CrateManager extends IManager<GoldenCrates> {
 			}
 		}
 		
-		double openCostEco = crate.getOpenCostVault();
-		if (openCostEco > 0 && !player.hasPermission(Perms.BYPASS_OPEN_COST) && this.vaultHook != null) {
-			double balance = this.vaultHook.getBalance(player);
+		VaultHK vaultHook = plugin.getVault();
+		double openCostEco = player.hasPermission(Perms.BYPASS_OPEN_COST) ? 0 : crate.getOpenCostVault();
+		if (openCostEco > 0 && vaultHook != null) {
+			double balance = vaultHook.getBalance(player);
 			if (balance < openCostEco) {
 				plugin.lang().Crate_Open_Error_NoMoney.send(player, true);
 				return false;
 			}
-			this.vaultHook.take(player, openCostEco);
 		}
 		
-		double openCostExp = crate.getOpenCostExp();
-		if (openCostExp > 0 && !player.hasPermission(Perms.BYPASS_OPEN_COST)) {
+		double openCostExp = player.hasPermission(Perms.BYPASS_OPEN_COST) ? 0 : crate.getOpenCostExp();
+		if (openCostExp > 0) {
 			double balance = PlayerUT.getTotalExperience(player);
 			if (balance < openCostExp) {
 				plugin.lang().Crate_Open_Error_NoExp.send(player, true);
 				return false;
 			}
-			PlayerUT.setExp(player, (long) -openCostExp);
 		}
 		
 		CratePreOpenEvent preOpenEvent = new CratePreOpenEvent(crate, player);
 		plugin.getPluginManager().callEvent(preOpenEvent);
 		if (preOpenEvent.isCancelled()) return false;
+		
+		// Take costs
+		if (vaultHook != null && openCostEco > 0) vaultHook.take(player, openCostEco);
+		if (openCostExp > 0) PlayerUT.setExp(player, (long) -openCostExp);
 		
 		// Open via GUI if crate has Template
 		if (template != null) {
@@ -304,7 +305,7 @@ public class CrateManager extends IManager<GoldenCrates> {
 				// Visual reward drop, but unpickable
 				if (!Config.CRATE_BLOCK_NO_VISUAL_DROP && block != null) {
 					Location center = LocUT.getCenter(block.getLocation().add(0, 1.1, 0), false);
-					ItemStack visualItem = reward.getPreviewFormatted();
+					ItemStack visualItem = reward.getPreview();
 					DataUT.setData(visualItem, TAG_CRATE, (double)Rnd.get()); // Make it unstackable
 					Item drop = block.getWorld().dropItem(center, visualItem);
 					drop.setInvulnerable(true);

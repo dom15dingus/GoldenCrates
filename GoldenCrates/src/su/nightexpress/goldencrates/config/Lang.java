@@ -21,14 +21,16 @@ public class Lang extends ILangTemplate {
 	public JLangMsg Command_Give_Desc = new JLangMsg("Gives crate(s) to a player.");
 	public JLangMsg Command_Give_Done = new JLangMsg("Given &ax%amount% %crate% &7crate(s) to &a%player%");
 	public JLangMsg Command_Give_Notify = new JLangMsg("You recieved &ax%amount% &a%crate%");
-	public JLangMsg Command_Give_Error = new JLangMsg("The crate must be an &cITEM &7crate!");
+	
+	public JLangMsg Command_Drop_Usage = new JLangMsg("<crate> <world> <x> <y> <z>");
+	public JLangMsg Command_Drop_Desc = new JLangMsg("Drop crate at specified location.");
+	public JLangMsg Command_Drop_Done = new JLangMsg("Dropped &a%crate%&7 at &a%x%&7, &a%y%&7, &a%z%&7 in &a%world%&7.");
 	
 	public JLangMsg Command_GiveKey_Usage = new JLangMsg("<player | *> <crate> [amount]");
 	public JLangMsg Command_GiveKey_Desc = new JLangMsg("Gives crate key(s) to a player.");
 	public JLangMsg Command_GiveKey_Done = new JLangMsg("Given &ax%amount% &a%key% &7key(s) to &a%player%");
 	public JLangMsg Command_GiveKey_Notify = new JLangMsg("You recieved &ax%amount% %key% &7key(s)!");
 	public JLangMsg Command_GiveKey_Error_NoKey = new JLangMsg("&cInvalid key!");
-	public JLangMsg Command_GiveKey_Error_NoUser = new JLangMsg("&cSuch user is not registered on the server.");
 	
 	public JLangMsg Command_CheckKey_Desc = new JLangMsg("Show amount of player keys.");
 	public JLangMsg Command_CheckKey_Usage = new JLangMsg("[player]");
@@ -54,23 +56,6 @@ public class Lang extends ILangTemplate {
 	
 	public JLangMsg Crate_Placeholder_Cooldown_Blank = new JLangMsg("Ready to open!");
 	
-	public JLangMsg Editor_Tip_Commands = new JLangMsg(
-			"&7"
-			+ "\n"
-			+ "&b&lCommand Tips:"
-			+ "\n"
-			+ "&7"
-			+ "\n"
-			+ "&2• &a[CONSOLE] <command> &2- Execute from Console."
-			+ "\n"
-			+ "&2• &a[OP] <command> &2- Execute as an Operator."
-			+ "\n"
-			+ "&2• &a<command> &2- Execute from a Player."
-			+ "\n"
-			+ "&2• &a%player% &2- Player name placeholder."
-			+ "\n"
-			+ "&7");
-	
 	public JLangMsg Editor_Tip_ID = new JLangMsg("&7Enter an ID name...");
 	public JLangMsg Editor_Tip_Name = new JLangMsg("&7Enter a new name...");
 	public JLangMsg Editor_Tip_KeyId = new JLangMsg("&7Enter key id...");
@@ -80,7 +65,8 @@ public class Lang extends ILangTemplate {
 	public JLangMsg Editor_Tip_HologramText = new JLangMsg("&7Enter a new line...");
 	public JLangMsg Editor_Tip_Cooldown = new JLangMsg("&7Enter a new value in seconds...");
 	public JLangMsg Editor_Tip_NPC = new JLangMsg("&7Enter a NPC ID...");
-	public JLangMsg Editor_Tip_Template = new JLangMsg("&7Enter a template name...");
+	public JLangMsg Editor_Tip_Template = new JLangMsg("&7Enter the template id...");
+	public JLangMsg Editor_Tip_Preview = new JLangMsg("&7Enter the preview id...");
 	public JLangMsg Editor_Tip_OpenCost = new JLangMsg("&7Enter a new cost...");
 	public JLangMsg Editor_Tip_MenuSlot = new JLangMsg("&7Enter a new slot...");
 	public JLangMsg Editor_Tip_MenuName = new JLangMsg("&7Enter a menu name...");

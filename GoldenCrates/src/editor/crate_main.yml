@@ -87,20 +87,23 @@ editor:
     slots: 4
     type: CRATE_CHANGE_NAME
 
-  template:
+  guis:
     material: PAINTING
-    name: '&eCrate Template'
+    name: '&eCrate Template and Preview'
     lore:
-    - '&bCurrent: &a%template%'
+    - '&bTemplate: &a%template%'
+    - '&bPreview: &a%preview%'
     - '&7'
-    - '&7Defines custom GUI'
-    - '&7template for crate'
-    - '&7reward roll animation.'
+    - '&7Defines custom GUIs for'
+    - '&7crate opening animation'
+    - '&7and reward preview display.'
     - '&7'
-    - '&6Left-Click: &eChange'
-    - '&6Right-Click: &eDisable'
+    - '&6Left-Click: &eChange Template'
+    - '&6Right-Click: &eChange Preview'
+    - '&6Shift-Left: &eDisable Template'
+    - '&6Shift-Right: &eDisable Preview'
     slots: 11
-    type: CRATE_CHANGE_TEMPLATE
+    type: CRATE_CHANGE_GUI
 
   icon:
     material: ENDER_CHEST

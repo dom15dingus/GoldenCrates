@@ -1,21 +1,24 @@
 main: su.nightexpress.goldencrates.GoldenCrates
-version: 3.10.1
+version: 3.11.0
 name: GoldenCrates
 author: NightExpress
-desciption: Perfect crates for your perfect server.
+desciption: Perfect crates for perfect servers.
 depend: [NexEngine]
 softdepend: [Citizens, HolographicDisplays, Vault, multiworld, Multiverse-Core, SunLight, PlaceholderAPI]
 api-version: 1.14
 permissions:
+  
   goldencrates.admin:
     description: Full plugin access.
     default: op
     children:
       goldencrates.user: true
       goldencrates.bypass: true
+  
   goldencrates.user:
     description: User access.
     default: true
+  
   goldencrates.bypass:
     description: All bypass access.
     default: op

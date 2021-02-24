@@ -1,0 +1,29 @@
+title: '%crate% Preview'
+size: 36
+
+reward-slots: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+reward-lore:
+- '&7'
+- '&e&lWin Chance: &6%reward-chance%%'
+- '&7'
+- '%reward-lore%'
+
+content:
+  next:
+    material: ARROW
+    name: '&aNext »'
+    lore: []
+    slots: '35'
+    type: NEXT
+  back:
+    material: ARROW
+    name: '&c« Back'
+    lore: []
+    slots: '27'
+    type: BACK
+  exit:
+    material: BARRIER
+    name: '&cExit'
+    lore: []
+    slots: '31'
+    type: EXIT

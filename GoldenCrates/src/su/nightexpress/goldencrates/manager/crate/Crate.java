@@ -43,6 +43,7 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
 
 	private String name;
 	private String template;
+	private String previewId;
 	private boolean isPermissionRequired;
 	private int openCooldown;
 	private double openCostEco;
@@ -72,6 +73,7 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
 		this.setName("&b" + StringUT.capitalizeFully(id + " Crate"));
 		this.setPermissionRequired(false);
 		this.setTemplate(null); // None
+		this.setPreviewId(JStrings.DEFAULT);
 		this.setOpenCooldown(15);
 		this.setOpenCostVault(0);
 		this.setOpenCostExp(0);
@@ -94,10 +96,13 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
 	
 	public Crate(@NotNull GoldenCrates plugin, @NotNull JYML cfg) {
 		super(plugin, cfg);
-
+		cfg.addMissing("preview", JStrings.DEFAULT);
+		cfg.saveChanges();
+		
 		this.setName(cfg.getString("name", this.getId()));
 		this.setPermissionRequired(cfg.getBoolean("permission-required"));
 		this.setTemplate(cfg.getString("template", "none"));
+		this.setPreviewId(cfg.getString("preview", JStrings.DEFAULT));
 		this.setOpenCooldown(cfg.getInt("cooldown"));
 		this.setAttachedNPCs(cfg.getIntArray("attached-citizens"));
 		this.setKeyId(cfg.getString("key.id"));
@@ -139,12 +144,12 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
 			}
 			
 			double rewChance = cfg.getDouble(path + "chance");
-			String rewName = cfg.getString(path + "name");
+			String rewName = cfg.getString(path + "name", rewId);
 			List<String> rewCmds = cfg.getStringList(path + "cmds");
 			ItemStack rewItem = cfg.getItem64(path + "item");
 			ItemStack rewPreview = cfg.getItem64(path + "preview");
 			
-			CrateReward reward = new CrateReward(this, rewId, rewChance, rewName, rewItem, rewCmds, rewPreview);
+			CrateReward reward = new CrateReward(this, rewId, rewChance, rewName, rewPreview, rewItem, rewCmds);
 			this.rewardMap.put(rewId, reward);
 		}
 	}
@@ -154,6 +159,7 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
     	cfg.set("name", this.getName());
     	cfg.set("permission-required", this.isPermissionRequired());
     	cfg.set("template", this.getTemplate());
+    	cfg.set("preview", this.getPreviewId());
     	cfg.set("cooldown", this.getOpenCooldown());
     	cfg.setIntArray("attached-citizens", this.getAttachedNPCs());
     	cfg.setItem("item", this.getItem());
@@ -250,6 +256,19 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
 	
 	public boolean hasTemplate() {
 		return !this.getTemplate().equalsIgnoreCase(JStrings.NONE);
+	}
+	
+	@NotNull
+	public String getPreviewId() {
+		return this.previewId;
+	}
+	
+	public void setPreviewId(@Nullable String previewId) {
+		this.previewId = previewId == null ? JStrings.NONE : previewId;
+	}
+	
+	public boolean hasPreview() {
+		return !this.previewId.equals(JStrings.NONE);
 	}
 	
 	public double getOpenCostVault() {
@@ -429,14 +448,16 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
 		this.rewardMap.remove(id.toLowerCase());
 	}
 	
-	public void openPreview(@NotNull Player player) {
-		if (!Config.REWARD_PREVIEW_ENABLED) {
-			return;
+	public boolean openPreview(@NotNull Player player) {
+		if (!this.hasPreview()) {
+			return false;
 		}
 		if (this.preview == null) {
-			this.preview = new CratePreview((GoldenCrates) plugin, this);
+			JYML cfg = JYML.loadOrExtract(plugin, Config.DIR_PREVIEWS + this.getPreviewId() + ".yml");
+			this.preview = new CratePreview((GoldenCrates) plugin, this, cfg);
 		}
 		this.preview.open(player, 1);
+		return true;
 	}
 	
 	@NotNull

@@ -18,6 +18,7 @@ import su.nexmedia.engine.manager.editor.EditorHandler;
 import su.nexmedia.engine.manager.editor.EditorManager;
 import su.nexmedia.engine.utils.ItemUT;
 import su.nightexpress.goldencrates.GoldenCrates;
+import su.nightexpress.goldencrates.manager.editor.CrateEditorHandler;
 import su.nightexpress.goldencrates.manager.editor.CrateEditorHub;
 import su.nightexpress.goldencrates.manager.editor.CrateEditorType;
 import su.nightexpress.goldencrates.manager.key.CrateKey;
@@ -27,7 +28,7 @@ public class KeyEditorKey extends NGUI<GoldenCrates> {
 	private CrateKey crateKey;
 	
 	public KeyEditorKey(@NotNull GoldenCrates plugin, @NotNull CrateKey crateKey) {
-		super(plugin, GoldenCrates.EDITOR_KEY_KEY, "");
+		super(plugin, CrateEditorHandler.KEY_MAIN, "");
 		this.crateKey = crateKey;
 		
 		GuiClick clickHandler = (p, type, e) -> {
@@ -93,8 +94,7 @@ public class KeyEditorKey extends NGUI<GoldenCrates> {
 			}
 		};
 		
-		JYML cfg = GoldenCrates.EDITOR_KEY_KEY;
-		
+		JYML cfg = CrateEditorHandler.KEY_MAIN;
 		for (String sId : cfg.getSection("content")) {
 			GuiItem guiItem = cfg.getGuiItem("content." + sId, ContentType.class);
 			if (guiItem == null) continue;
@@ -117,8 +117,8 @@ public class KeyEditorKey extends NGUI<GoldenCrates> {
 	}
 	
 	@Override
-	protected void replaceFrame(@NotNull Player p, @NotNull GuiItem guiItem) {
-		super.replaceFrame(p, guiItem);
+	protected void replaceFrame(@NotNull Player player, @NotNull GuiItem guiItem) {
+		super.replaceFrame(player, guiItem);
 		
 		Enum<?> type = guiItem.getType();
 		if (type == null) return;
@@ -149,8 +149,8 @@ public class KeyEditorKey extends NGUI<GoldenCrates> {
 	}
 
 	@Override
-	protected void replaceMeta(@NotNull Player p, @NotNull ItemStack item, @NotNull GuiItem guiItem) {
-		super.replaceMeta(p, item, guiItem);
+	protected void replaceMeta(@NotNull Player player, @NotNull ItemStack item, @NotNull GuiItem guiItem) {
+		super.replaceMeta(player, item, guiItem);
 		
 		ItemMeta meta = item.getItemMeta();
 		if (meta == null) return;

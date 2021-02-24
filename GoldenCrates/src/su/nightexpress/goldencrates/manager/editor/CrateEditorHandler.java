@@ -1,5 +1,6 @@
 package su.nightexpress.goldencrates.manager.editor;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import su.nexmedia.engine.config.api.JYML;
 import su.nexmedia.engine.manager.api.gui.NGUI;
 import su.nexmedia.engine.manager.editor.EditorHandler;
 import su.nexmedia.engine.manager.editor.EditorManager;
@@ -25,69 +27,76 @@ import su.nightexpress.goldencrates.manager.key.CrateKey;
 
 public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 
+	public static JYML CRATE_LIST;
+	public static JYML CRATE_MAIN;
+	public static JYML CRATE_REWARD_LIST;
+	public static JYML CRATE_REWARD_MAIN;
+	
+	public static JYML KEY_LIST;
+	public static JYML KEY_MAIN;
+	
 	public CrateEditorHandler(@NotNull GoldenCrates plugin, @NotNull NGUI<GoldenCrates> main) {
 		super(plugin, CrateEditorType.class, main);
+		
+    	if (CRATE_LIST == null || !CRATE_LIST.reload()) {
+    		CRATE_LIST = new JYML(new File(plugin.getDataFolder() + "/editor/crate_list.yml"));
+    	}
+    	if (CRATE_MAIN == null || !CRATE_MAIN.reload()) {
+    		CRATE_MAIN = new JYML(new File(plugin.getDataFolder() + "/editor/crate_main.yml"));
+    	}
+    	if (CRATE_REWARD_LIST == null || !CRATE_REWARD_LIST.reload()) {
+    		CRATE_REWARD_LIST = new JYML(new File(plugin.getDataFolder() + "/editor/crate_rewards_list.yml"));
+    	}
+    	if (CRATE_REWARD_MAIN == null || !CRATE_REWARD_MAIN.reload()) {
+    		CRATE_REWARD_MAIN = new JYML(new File(plugin.getDataFolder() + "/editor/crate_rewards_reward.yml"));
+    	}
+    	
+    	
+    	if (KEY_LIST == null || !KEY_LIST.reload()) {
+    		KEY_LIST = new JYML(new File(plugin.getDataFolder() + "/editor/key_list.yml"));
+    	}
+    	if (KEY_MAIN == null || !KEY_MAIN.reload()) {
+    		KEY_MAIN = new JYML(new File(plugin.getDataFolder() + "/editor/key_key.yml"));
+    	}
 	}
 
 	@Override
 	protected boolean onType(
-			@NotNull Player p, 
-			@Nullable Object obj, 
-			@NotNull Enum<?> type2, 
-			@NotNull String msg) {
+			@NotNull Player player, @Nullable Object obj, 
+			@NotNull Enum<?> type2, @NotNull String msg) {
 		
     	CrateEditorType type = (CrateEditorType) type2;
-    	Crate crate = null;
-    	CrateKey crateKey = null;
-    	CrateReward reward = null;
-    	
-    	if (obj instanceof Crate) {
-    		crate = (Crate) obj;
+    	if (obj instanceof Crate || type == CrateEditorType.CRATE_CREATE_NEW) {
+    		return this.onTypeCrate(player, (Crate) obj, type, msg);
     	}
-    	else if (obj instanceof CrateKey) {
-    		crateKey = (CrateKey) obj;
+    	else if (obj instanceof CrateKey || type == CrateEditorType.KEY_CREATE_NEW) {
+    		return this.onTypeKey(player, (CrateKey) obj, type, msg);
     	}
     	else if (obj instanceof CrateReward) {
-    		reward = (CrateReward) obj;
+    		return this.onTypeReward(player, (CrateReward) obj, type, msg);
     	}
-    	
-    	if (type == CrateEditorType.CRATE_CREATE_NEW) {
-    		msg = StringUT.colorOff(msg);
-    		if (!plugin.getCrateManager().create(msg)) {
-    			EditorManager.errorCustom(p, plugin.lang().Editor_Error_CrateExists.getMsg());
-    			return false;
-    		}
-    		CrateEditorHub main = (CrateEditorHub) this.getMainEditor();
-    		if (main != null) main.getCratesEditor().open(p, 1);
-			return true;
-    	}
-    	if (type == CrateEditorType.KEY_CREATE_NEW) {
-    		msg = StringUT.colorOff(msg);
-    		if (!plugin.getKeyManager().create(msg)) {
-    			EditorManager.errorCustom(p, plugin.lang().Editor_Error_Key_Exists.getMsg());
-    			return false;
-    		}
-    		CrateEditorHub main = (CrateEditorHub) this.getMainEditor();
-    		if (main != null) main.getKeysEditor().open(p, 1);
-			return true;
-    	}
-    	
-    	
-    	if (crate != null) {
-    		return this.onTypeCrate(p, crate, type, msg);
-    	}
-    	if (crateKey != null) {
-    		return this.onTypeKey(p, crateKey, type, msg);
-    	}
-    	if (reward != null) {
-    		return this.onTypeReward(p, reward, type, msg);
-    	}
-    	
     	return true;
 	}
 
-	private boolean onTypeCrate(@NotNull Player p, @NotNull Crate crate, @NotNull CrateEditorType type, @NotNull String msg) {
-    	switch (type) {
+	private boolean onTypeCrate(
+			@NotNull Player player, @Nullable Crate crate, 
+			@NotNull CrateEditorType type, @NotNull String msg) {
+		
+    	if (crate == null) {
+        	if (type == CrateEditorType.CRATE_CREATE_NEW) {
+        		msg = StringUT.colorOff(msg);
+        		if (!plugin.getCrateManager().create(msg)) {
+        			EditorManager.errorCustom(player, plugin.lang().Editor_Error_CrateExists.getMsg());
+        			return false;
+        		}
+        		CrateEditorHub main = (CrateEditorHub) this.getMainEditor();
+        		if (main != null) main.getCratesEditor().open(player, 1);
+    			
+        	}
+        	return true;
+    	}
+		
+		switch (type) {
 			case CRATE_CHANGE_BLOCK_HOLOGRAM: {
 				List<String> list = crate.getHologramText();
 				list.add(msg);
@@ -98,7 +107,7 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 				msg = StringUT.colorOff(msg);
 				int sec = StringUT.getInteger(msg, -1);
 				if (sec < 0) {
-					EditorManager.errorNumber(p, false);
+					EditorManager.errorNumber(player, false);
 					return false;
 				}
 				
@@ -109,7 +118,7 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 				msg = StringUT.colorOff(msg);
 				int s = StringUT.getInteger(msg, -1);
 				if (s < 0) {
-					EditorManager.errorNumber(p, false);
+					EditorManager.errorNumber(player, false);
 					return false;
 				}
 				int[] cur = crate.getAttachedNPCs();
@@ -125,15 +134,20 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 				crate.setAttachedNPCs(npc);
 				break;
 			}
-			case CRATE_CHANGE_TEMPLATE: {
+			case CRATE_CHANGE_GUI_TEMPLATE: {
 				msg = StringUT.colorOff(msg);
 				
 				if (!plugin.getTemplateManager().isTemplate(msg)) {
-					EditorManager.errorCustom(p, plugin.lang().Editor_Error_Template.getMsg());
+					EditorManager.errorCustom(player, plugin.lang().Editor_Error_Template.getMsg());
 					return false;
 				}
 				
 				crate.setTemplate(msg);
+				break;
+			}
+			case CRATE_CHANGE_GUI_PREVIEW: {
+				msg = StringUT.colorOff(msg);
+				crate.setPreviewId(msg);
 				break;
 			}
 			case CRATE_CHANGE_NAME: {
@@ -148,7 +162,7 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 				msg = StringUT.colorOff(msg);
 				double cost = StringUT.getDouble(msg, -1);
 				if (cost < 0) {
-					EditorManager.errorNumber(p, true);
+					EditorManager.errorNumber(player, true);
 					return false;
 				}
 				
@@ -159,7 +173,7 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 				msg = StringUT.colorOff(msg);
 				double cost = StringUT.getDouble(msg, -1);
 				if (cost < 0) {
-					EditorManager.errorNumber(p, true);
+					EditorManager.errorNumber(player, true);
 					return false;
 				}
 				
@@ -180,23 +194,26 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
     	
     	plugin.getCrateManager().save(crate);
     	if (type == CrateEditorType.CRATE_CHANGE_REWARD_BROADCAST) {
-    		crate.getEditor().openEditorRewards(p);
+    		crate.getEditor().openEditorRewards(player);
     	}
     	else {
-    		crate.getEditor().open(p, 1);
+    		crate.getEditor().open(player, 1);
     	}
     	
     	return true;
 	}
 	
-	private boolean onTypeReward(@NotNull Player p, @NotNull CrateReward reward, @NotNull CrateEditorType type, @NotNull String msg) {
-    	switch (type) {
+	private boolean onTypeReward(
+			@NotNull Player player, @NotNull CrateReward reward, 
+			@NotNull CrateEditorType type, @NotNull String msg) {
+    	
+		switch (type) {
 			case CRATE_CHANGE_REWARD_CHANCE: {
 				msg = StringUT.colorOff(msg);
 				double d = StringUT.getDouble(msg, -1);
 				
 				if (d < 0) {
-					EditorManager.errorNumber(p, true);
+					EditorManager.errorNumber(player, true);
 					return false;
 				}
 				
@@ -217,13 +234,29 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 		}
     	
     	plugin.getCrateManager().save(reward.getCrate());
-    	reward.getEditor().open(p, 1);
+    	reward.getEditor().open(player, 1);
     	
     	return true;
 	}
 	
-	private boolean onTypeKey(@NotNull Player p, @NotNull CrateKey crateKey, @NotNull CrateEditorType type, @NotNull String msg) {
-    	switch (type) {
+	private boolean onTypeKey(
+			@NotNull Player player, @Nullable CrateKey crateKey, 
+			@NotNull CrateEditorType type, @NotNull String msg) {
+    	
+		if (crateKey == null) {
+	    	if (type == CrateEditorType.KEY_CREATE_NEW) {
+	    		msg = StringUT.colorOff(msg);
+	    		if (!plugin.getKeyManager().create(msg)) {
+	    			EditorManager.errorCustom(player, plugin.lang().Editor_Error_Key_Exists.getMsg());
+	    			return false;
+	    		}
+	    		CrateEditorHub main = (CrateEditorHub) this.getMainEditor();
+	    		if (main != null) main.getKeysEditor().open(player, 1);
+	    	}
+	    	return true;
+		}
+		
+		switch (type) {
 			case KEY_CHANGE_NAME: {
 				crateKey.setName(msg);
 				break;
@@ -234,7 +267,7 @@ public class CrateEditorHandler extends EditorHandler<GoldenCrates> {
 		}
     	
     	plugin.getKeyManager().save(crateKey);
-    	crateKey.getEditor().open(p, 1);
+    	crateKey.getEditor().open(player, 1);
     	
     	return true;
 	}

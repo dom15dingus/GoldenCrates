@@ -22,6 +22,7 @@ import su.nexmedia.engine.manager.editor.EditorManager;
 import su.nexmedia.engine.utils.CollectionsUT;
 import su.nexmedia.engine.utils.StringUT;
 import su.nightexpress.goldencrates.GoldenCrates;
+import su.nightexpress.goldencrates.manager.editor.CrateEditorHandler;
 import su.nightexpress.goldencrates.manager.editor.CrateEditorType;
 import su.nightexpress.goldencrates.manager.key.CrateKey;
 
@@ -31,59 +32,59 @@ public class KeyEditorList extends NGUI<GoldenCrates> {
 	private String objName;
 	private List<String> objLore;
 	
-	public KeyEditorList(@NotNull GoldenCrates plugin, @NotNull JYML cfg) {
-		super(plugin, cfg, "");
+	public KeyEditorList(@NotNull GoldenCrates plugin) {
+		super(plugin, CrateEditorHandler.KEY_LIST, "");
+		JYML cfg = CrateEditorHandler.KEY_LIST;
+		
 		this.objSlots = cfg.getIntArray("object-slots");
 		this.objName = StringUT.color(cfg.getString("object-name", "%key%"));
 		this.objLore = StringUT.color(cfg.getStringList("object-lore"));
 		
-		GuiClick click = new GuiClick() {
-			@Override
-			public void click(Player p, @Nullable Enum<?> type, InventoryClickEvent e) {
-				if (type == null) return;
-				
-				Class<?> clazz = type.getClass();
-				if (clazz.equals(ContentType.class)) {
-					ContentType type2 = (ContentType) type;
-					switch (type2) {
-						case EXIT: {
-							p.closeInventory();
-							break;
-						}
-						case RETURN: {
-							plugin.openEditor(p);
-							break;
-						}
-						case NEXT: {
-							open(p, getUserPage(p, 0) + 1);
-							break;
-						}
-						case BACK: {
-							open(p, getUserPage(p, 0) - 1);
-							break;
-						}
-						default: {
-							break;
-						}
+		GuiClick click = (p, type, e) -> {
+			if (type == null) return;
+			
+			Class<?> clazz = type.getClass();
+			if (clazz.equals(ContentType.class)) {
+				ContentType type2 = (ContentType) type;
+				switch (type2) {
+					case EXIT: {
+						p.closeInventory();
+						break;
+					}
+					case RETURN: {
+						plugin.openEditor(p);
+						break;
+					}
+					case NEXT: {
+						this.open(p, this.getUserPage(p, 0) + 1);
+						break;
+					}
+					case BACK: {
+						this.open(p, this.getUserPage(p, 0) - 1);
+						break;
+					}
+					default: {
+						break;
 					}
 				}
-				else if (clazz.equals(CrateEditorType.class)) {
-					CrateEditorType type2 = (CrateEditorType) type;
-					switch (type2) {
-						case KEY_CREATE_NEW: {
-							EditorManager.startEdit(p, null, type2);
-			    			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_ID.getMsg());
-			    			p.closeInventory();
-							break;
-						}
-						default: {
-							break;
-						}
+				return;
+			}
+			
+			if (clazz.equals(CrateEditorType.class)) {
+				CrateEditorType type2 = (CrateEditorType) type;
+				switch (type2) {
+					case KEY_CREATE_NEW: {
+						EditorManager.startEdit(p, null, type2);
+		    			EditorManager.tipCustom(p, plugin.lang().Editor_Tip_ID.getMsg());
+		    			p.closeInventory();
+						break;
+					}
+					default: {
+						break;
 					}
 				}
 			}
 		};
-		
 		
 		for (String sId : cfg.getSection("content")) {
 			GuiItem guiItem = cfg.getGuiItem("content." + sId, ContentType.class);

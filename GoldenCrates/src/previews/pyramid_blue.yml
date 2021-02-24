@@ -1,0 +1,37 @@
+title: '            &nCrate Preview'
+size: 45
+
+reward-slots: 4,12,13,14,22,21,20,23,24,31,30,29,28,32,33,34
+reward-lore:
+- '%reward-lore%'
+- ''
+- '&7Chance: &b%reward-chance%%'
+
+content:
+  panel_cyan:
+    material: 'CYAN_STAINED_GLASS_PANE'
+    slots: 0,1,2,3,5,6,7,8,9,10,11,15,16,17
+  panel_lb:
+    material: 'LIGHT_BLUE_STAINED_GLASS_PANE'
+    slots: 18,19,25,26,27,35
+  panel_blue:
+    material: 'LIGHT_BLUE_STAINED_GLASS_PANE'
+    slots: 36,37,38,39,40,41,42,43,44
+  next:
+    material: ARROW
+    name: '&aNext »'
+    lore: []
+    slots: '44'
+    type: NEXT
+  back:
+    material: ARROW
+    name: '&c« Back'
+    lore: []
+    slots: '36'
+    type: BACK
+  exit:
+    material: BARRIER
+    name: '&cExit'
+    lore: []
+    slots: '40'
+    type: EXIT

@@ -71,7 +71,7 @@ public class CrateEditorHub extends NGUI<GoldenCrates> {
 	@NotNull
 	public CrateEditorList getCratesEditor() {
 		if (this.crateEditorList == null) {
-			this.crateEditorList = new CrateEditorList(plugin, GoldenCrates.EDITOR_CRATE_LIST);
+			this.crateEditorList = new CrateEditorList(this.plugin);
 		}
 		return this.crateEditorList;
 	}
@@ -79,7 +79,7 @@ public class CrateEditorHub extends NGUI<GoldenCrates> {
 	@NotNull
 	public KeyEditorList getKeysEditor() {
 		if (this.keyEditorKeys == null) {
-			this.keyEditorKeys = new KeyEditorList(plugin, GoldenCrates.EDITOR_KEY_LIST);
+			this.keyEditorKeys = new KeyEditorList(this.plugin);
 		}
 		return this.keyEditorKeys;
 	}
@@ -103,5 +103,4 @@ public class CrateEditorHub extends NGUI<GoldenCrates> {
 	protected boolean cancelPlayerClick() {
 		return true;
 	}
-
 }
