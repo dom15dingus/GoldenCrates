@@ -69,7 +69,7 @@ public class GiveCommand extends ISubCommand<GoldenCrates> {
 		
 		Crate crate = plugin.getCrateManager().getCrateById(crateId);
 		if (crate == null) {
-			plugin.lang().Crate_Error_Invalid.replace("%crate%", crateId).send(sender, true);
+			plugin.lang().Crate_Error_Invalid.replace("%crate%", crateId).send(sender);
 			return;
 		}
 		
@@ -93,6 +93,6 @@ public class GiveCommand extends ISubCommand<GoldenCrates> {
 			.replace("%player%", pName)
 			.replace("%amount%", String.valueOf(amount))
 			.replace("%crate%", crate.getName())
-			.send(sender, true);
+			.send(sender);
 	}
 }

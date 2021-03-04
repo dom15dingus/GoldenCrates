@@ -239,7 +239,7 @@ public class KeyManager extends IManager<GoldenCrates> {
 		plugin.lang().Command_GiveKey_Notify
 				.replace("%amount%", amount)
 				.replace("%key%", key.getName())
-				.send(player, true);
+				.send(player);
 		return true;
 	}
 	

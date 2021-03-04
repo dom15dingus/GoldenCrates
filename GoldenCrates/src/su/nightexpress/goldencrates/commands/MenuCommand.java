@@ -52,7 +52,7 @@ public class MenuCommand extends ISubCommand<GoldenCrates> {
 		
 		CrateMenu menu = plugin.getMenuManager().getMenuById(args[1]);
 		if (menu == null) {
-			plugin.lang().Menu_Invalid.replace("%menu%", args[1]).send(sender, true);
+			plugin.lang().Menu_Invalid.replace("%menu%", args[1]).send(sender);
 			return;
 		}
 		

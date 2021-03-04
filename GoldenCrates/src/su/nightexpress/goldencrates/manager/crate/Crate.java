@@ -264,11 +264,11 @@ public class Crate extends LoadableItem implements Cleanable, Editable {
 	}
 	
 	public void setPreviewId(@Nullable String previewId) {
-		this.previewId = previewId == null ? JStrings.NONE : previewId;
+		this.previewId = previewId == null ? JStrings.NONE : previewId.toLowerCase();
 	}
 	
 	public boolean hasPreview() {
-		return !this.previewId.equals(JStrings.NONE);
+		return !this.previewId.equalsIgnoreCase(JStrings.NONE);
 	}
 	
 	public double getOpenCostVault() {

@@ -65,7 +65,7 @@ public class GivekeyCommand extends ISubCommand<GoldenCrates> {
 		
 		CrateKey crateKey = plugin.getKeyManager().getKeyById(args[2]);
 		if (crateKey == null) {
-			plugin.lang().Command_GiveKey_Error_NoKey.send(sender, true);
+			plugin.lang().Command_GiveKey_Error_NoKey.send(sender);
 			return;
 		}
 		
@@ -80,7 +80,7 @@ public class GivekeyCommand extends ISubCommand<GoldenCrates> {
 		}
 		else {
 			if (!plugin.getKeyManager().giveKey(pName, crateKey, amount)) {
-				plugin.lang().Error_NoData.replace("%player%", pName).send(sender, true);
+				plugin.lang().Error_NoData.replace("%player%", pName).send(sender);
 				return;
 			}
 		}
@@ -89,6 +89,6 @@ public class GivekeyCommand extends ISubCommand<GoldenCrates> {
 				.replace("%player%", pName)
 				.replace("%amount%", amount)
 				.replace("%key%", crateKey.getName())
-				.send(sender, true);
+				.send(sender);
 	}
 }

@@ -211,23 +211,23 @@ public class CrateManager extends IManager<GoldenCrates> {
 		
 		plugin.lang().Command_Give_Notify
 			.replace("%amount%", amount).replace("%crate%", crate.getName())
-			.send(player, true);
+			.send(player);
 	}
 	
 	public boolean openCrate(@NotNull Player player, @NotNull Crate crate, @Nullable ItemStack item, @Nullable Block block) {
 		if (TemplateManager.isSpinning(player)) {
-			plugin.lang().Crate_Open_Error_AlreadyIn.send(player, true);
+			plugin.lang().Crate_Open_Error_AlreadyIn.send(player);
 			return false;
 		}
 		
 		if (!crate.hasPermission(player)) {
-			plugin.lang().Error_NoPerm.send(player, true);
+			plugin.lang().Error_NoPerm.send(player);
 			return false;
 		}
 		
 		int rewAmount = crate.rollRewardsAmount();
 		if (crate.getRewards().isEmpty() || (!crate.hasTemplate() && rewAmount < 1)) {
-			plugin.lang().Crate_Open_Error_NoRewards.send(player, true);
+			plugin.lang().Crate_Open_Error_NoRewards.send(player);
 			return false;
 		}
 		
@@ -236,7 +236,7 @@ public class CrateManager extends IManager<GoldenCrates> {
 			long end = user.getCrateCooldown(crate);
 			plugin.lang().Crate_Open_Error_Cooldown
 				.replace("%time%", TimeUT.formatTimeLeft(end))
-				.send(player, true);
+				.send(player);
 			return false;
 		}
 		
@@ -247,7 +247,7 @@ public class CrateManager extends IManager<GoldenCrates> {
 			if (ItemUT.isAir(item2)) emptySlots++;
 		}
 		if (emptySlots < maxSlots) {
-			plugin.lang().Crate_Open_Error_NoSlots.replace("%slots%", maxSlots).send(player, true);
+			plugin.lang().Crate_Open_Error_NoSlots.replace("%slots%", maxSlots).send(player);
 			return false;
 		}
 		
@@ -257,7 +257,7 @@ public class CrateManager extends IManager<GoldenCrates> {
 				if (block != null && crate.isBlockPushbackEnabled()) {
 					player.setVelocity(player.getEyeLocation().getDirection().setY(-0.4D).multiply(-1.25));
 				}
-				plugin.lang().Crate_Open_Error_NoKey.send(player, true);
+				plugin.lang().Crate_Open_Error_NoKey.send(player);
 				return false;
 			}
 		}
@@ -267,7 +267,7 @@ public class CrateManager extends IManager<GoldenCrates> {
 		if (openCostEco > 0 && vaultHook != null) {
 			double balance = vaultHook.getBalance(player);
 			if (balance < openCostEco) {
-				plugin.lang().Crate_Open_Error_NoMoney.send(player, true);
+				plugin.lang().Crate_Open_Error_NoMoney.send(player);
 				return false;
 			}
 		}
@@ -276,7 +276,7 @@ public class CrateManager extends IManager<GoldenCrates> {
 		if (openCostExp > 0) {
 			double balance = PlayerUT.getTotalExperience(player);
 			if (balance < openCostExp) {
-				plugin.lang().Crate_Open_Error_NoExp.send(player, true);
+				plugin.lang().Crate_Open_Error_NoExp.send(player);
 				return false;
 			}
 		}
@@ -362,14 +362,14 @@ public class CrateManager extends IManager<GoldenCrates> {
 	}
 	
 	public void broadcastReward(@NotNull Player player, @NotNull Crate crate, @NotNull String rewName) {
-		plugin.lang().Crate_Open_Reward_Info.replace("%reward%", rewName).send(player, true);
+		plugin.lang().Crate_Open_Reward_Info.replace("%reward%", rewName).send(player);
 		
 		if (crate.isRewardBroadcast()) {
 			plugin.lang().Crate_Open_Reward_Broadcast
 				.replace("%crate%", crate.getName())
 				.replace("%reward%", rewName)
 				.replace("%player%", player.getName())
-				.broadcast(true);
+				.broadcast();
 		}
 	}
 	

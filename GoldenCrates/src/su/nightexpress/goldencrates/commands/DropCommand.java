@@ -70,13 +70,13 @@ public class DropCommand extends ISubCommand<GoldenCrates> {
 		
 		Crate crate = plugin.getCrateManager().getCrateById(args[1]);
 		if (crate == null) {
-			plugin.lang().Crate_Error_Invalid.replace("%id%", args[1]).send(sender, true);
+			plugin.lang().Crate_Error_Invalid.replace("%id%", args[1]).send(sender);
 			return;
 		}
 		
 		World world = plugin.getServer().getWorld(args[2]);
 		if (world == null) {
-			plugin.lang().Error_NoWorld.replace("%world%", args[2]).send(sender, true);
+			plugin.lang().Error_NoWorld.replace("%world%", args[2]).send(sender);
 			return;
 		}
 		
@@ -92,6 +92,6 @@ public class DropCommand extends ISubCommand<GoldenCrates> {
 			.replace("%y%", NumberUT.format(y))
 			.replace("%z%", NumberUT.format(z))
 			.replace("%world%", CoreConfig.getWorldName(world.getName()))
-			.send(sender, true);
+			.send(sender);
 	}
 }
