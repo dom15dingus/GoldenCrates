@@ -84,7 +84,8 @@ public class DropCommand extends ISubCommand<GoldenCrates> {
 		double y = this.getNumD(sender, args[4], 0, true);
 		double z = this.getNumD(sender, args[5], 0, true);
 		Location location = new Location(world, x, y, z);
-		world.dropItemNaturally(location, crate.getItem());
+		
+		if (!plugin.getCrateManager().spawnCrate(crate, location)) return;
 		
 		plugin.lang().Command_Drop_Done
 			.replace("%crate%", crate.getName())

@@ -13,6 +13,7 @@ import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -200,6 +201,14 @@ public class CrateManager extends IManager<GoldenCrates> {
 				.filter(crate -> crate.getBlockLocations().contains(loc)).findFirst();
 		
 		return opt.isPresent() ? opt.get() : null;
+	}
+	
+	public boolean spawnCrate(@NotNull Crate crate, @NotNull Location location) {
+		World world = location.getWorld();
+		if (world == null) return false;
+		
+		world.dropItemNaturally(location, crate.getItem());
+		return true;
 	}
 	
 	public void giveCrate(@NotNull Player player, @NotNull Crate crate, int amount) {
