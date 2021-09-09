@@ -1,6 +1,6 @@
 main: su.nightexpress.goldencrates.GoldenCrates
 version: 3.11.0
-name: GoldenCrates
+name: &a&lOne&9&lBlock&c&lRequired
 author: NightExpress
 desciption: Perfect crates for perfect servers.
 depend: [NexEngine]
